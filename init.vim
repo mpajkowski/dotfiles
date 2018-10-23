@@ -121,3 +121,6 @@ nnoremap <silent> <Leader>} viw<esc>a}<esc>bi{<esc>
 
 autocmd BufWritePre * %s/\s\+$//e
 autocmd BufWritePre *.h,*.hpp,*.c,*.cpp,*.cc ClangFormat
+
+" local vim settings
+source ~/.config/nvim/local.vim
