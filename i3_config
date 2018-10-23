@@ -30,7 +30,7 @@ font pango:Monaco 10
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Shift+Return exec termite
+bindsym $mod+Shift+Return exec alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
