@@ -28,8 +28,8 @@ let NERDTreeMinimalUI = 1
 
 inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
 
-let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+let g:UltiSnipsJumpForwardTrigger	= "<c-k>"
+let g:UltiSnipsJumpBackwardTrigger	= "<c-j>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 
 set completeopt=noinsert,menuone,noselect
