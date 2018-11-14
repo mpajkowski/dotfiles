@@ -26,6 +26,9 @@ call plug#end()
 let NERDTreeAutoDeleteBuffer = 1
 let NERDTreeMinimalUI = 1
 
+set runtimepath+=~/dotfiles/snippets
+let g:UltiSnipsSnippetsDir="~/dotfiles/snippets/UltiSnips"
+
 inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
 
 let g:UltiSnipsJumpForwardTrigger	= "<c-k>"
