@@ -30,13 +30,17 @@ font pango:Monaco 10
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Shift+Return exec alacritty
+bindsym $mod+Shift+Return exec alacritty -e tmux
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
-# screeemshot
+# screenshot
 bindsym Print exec gnome-screenshot --interactive
+
+# backlight
+bindsym XF86MonBrightnessUp exec light -A 5
+bindsym XF86MonBrightnessDown exec light -U 5
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec dmenu_run
@@ -180,12 +184,13 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3blocks
+  status_command i3blocks
 	position top
 }
 
-exec nm-applet
-exec compton
 exec xrandr --output DP-1 --off --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate normal --output eDP-1 --primary --mode 1920x1080 --pos 1920x592 --rotate normal --output HDMI-2 --off
 exec albert
 exec qsynth
+# Compositor (Animations, Shadows, Transparency)
+exec --no-startup-id compton -cCFb --backend glx --vsync opengl
+exec --no-startup-id exec nm-applet

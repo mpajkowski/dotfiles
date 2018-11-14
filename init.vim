@@ -18,21 +18,40 @@ Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2-path'
 Plug 'sakhnik/nvim-gdb'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'ncm2/ncm2-ultisnips'
 call plug#end()
 
-autocmd BufEnter * call ncm2#enable_for_buffer()
+let NERDTreeAutoDeleteBuffer = 1
+let NERDTreeMinimalUI = 1
+
+inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+
+let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+let g:UltiSnipsRemoveSelectModeMappings = 0
+
 set completeopt=noinsert,menuone,noselect
+augroup my_cm_setup
+  autocmd!
+  autocmd BufEnter * call ncm2#enable_for_buffer()
+  autocmd Filetype tex call ncm2#register_source({
+          \ 'name': 'vimtex',
+          \ 'priority': 8,
+          \ 'scope': ['tex'],
+          \ 'mark': 'tex',
+          \ 'word_pattern': '\w+',
+          \ 'complete_pattern': g:vimtex#re#ncm2,
+          \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
+          \ })
+augroup END
 
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-    \ 'c': ['ccls', '--log-file=/tmp/cc.log'],
-    \ 'cpp': ['ccls', '--log-file=/tmp/cc.log'],
-    \ 'cuda': ['ccls', '--log-file=/tmp/cc.log'],
-    \ 'objc': ['ccls', '--log-file=/tmp/cc.log'],
-    \ }
-
-let g:LanguageClient_autoStart = 1
-set formatexpr=LanguageClient_textDocument_rangeFormatting()
+   \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+   \ 'c': ['cquery', '--log-file=/tmp/cq.log',   '--init={"cacheDirectory":"/home/marcin/.cache/cquery"}'],
+   \ 'cpp': ['cquery', '--log-file=/tmp/cq.log', '--init={"cacheDirectory":"/home/marcin/.cache/cquery"}'],
+   \ }
 
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
@@ -41,6 +60,7 @@ nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
 colorscheme hybrid_reverse
 set background=dark
+set autoread
 set hidden
 set noswapfile
 set nobackup
@@ -92,7 +112,7 @@ augroup line_return
                 \ endif
 augroup END
 
-let g:airline_theme = "atomic"
+let g:airline_theme = 'atomic'
 let g:airline#extensions#tabline#enabled = 2
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#left_sep = ' '
