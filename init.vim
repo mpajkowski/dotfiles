@@ -10,10 +10,8 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
-Plug 'jiangmiao/auto-pairs'
 Plug 'lervag/vimtex'
 Plug 'kristijanhusak/vim-hybrid-material'
-Plug 'rhysd/vim-clang-format'
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2-path'
@@ -21,10 +19,14 @@ Plug 'sakhnik/nvim-gdb'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'ncm2/ncm2-ultisnips'
+Plug 'rhysd/vim-clang-format'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'tpope/vim-surround'
+Plug 'alepez/vim-gtest'
+Plug 'Raimondi/delimitMate'
 call plug#end()
 
 let NERDTreeAutoDeleteBuffer = 1
-let NERDTreeMinimalUI = 1
 
 set runtimepath+=~/dotfiles/snippets
 let g:UltiSnipsSnippetsDir="~/dotfiles/snippets/UltiSnips"
@@ -61,8 +63,8 @@ nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
-colorscheme hybrid_reverse
 set background=dark
+colorscheme hybrid_reverse
 set autoread
 set hidden
 set noswapfile
@@ -109,8 +111,9 @@ nnoremap zs :w<CR>
 " Make Sure that Vim returns to the same line when we reopen a file"
 augroup line_return
     au!
+    au BufReadPost gitcommit let b:execute_on_git_commit=true
     au BufReadPost *
-                \ if line("'\"") > 0 && line("'\"") <= line("$") |
+                \ if line("'\"") > 0 && line("'\"") <= line("$") && !exists("b:execute_on_git_commit") |
                 \ execute 'normal! g`"zvzz' |
                 \ endif
 augroup END
@@ -133,17 +136,7 @@ nnoremap <silent> <Leader>tt :TagbarToggle<CR>
 nnoremap <silent> <Leader>bd :Bclose<CR>
 nnoremap <silent> <Leader>qq :q<CR>
 
-nnoremap <silent> <Leader>" viw<esc>a"<esc>bi"<esc>
-nnoremap <silent> <Leader>' viw<esc>a'<esc>bi'<esc>
-nnoremap <silent> <Leader>( viw<esc>a)<esc>bi(<esc>
-nnoremap <silent> <Leader>) viw<esc>a)<esc>bi(<esc>
-nnoremap <silent> <Leader>[ viw<esc>a]<esc>bi[<esc>
-nnoremap <silent> <Leader>] viw<esc>a]<esc>bi[<esc>
-nnoremap <silent> <Leader>{ viw<esc>a}<esc>bi{<esc>
-nnoremap <silent> <Leader>} viw<esc>a}<esc>bi{<esc>
-
 autocmd BufWritePre * %s/\s\+$//e
 autocmd BufWritePre *.h,*.hpp,*.c,*.cpp,*.cc ClangFormat
-
 " local vim settings
 sil! source ~/.config/nvim/local.vim
