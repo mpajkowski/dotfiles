@@ -12,45 +12,30 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ }
 Plug 'lervag/vimtex'
 Plug 'kristijanhusak/vim-hybrid-material'
-Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2-path'
 Plug 'sakhnik/nvim-gdb'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'ncm2/ncm2-ultisnips'
 Plug 'rhysd/vim-clang-format'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'tpope/vim-surround'
 Plug 'alepez/vim-gtest'
 Plug 'Raimondi/delimitMate'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 call plug#end()
 
+let g:deoplete#enable_at_startup = 1
 let NERDTreeAutoDeleteBuffer = 1
 
 set runtimepath+=~/dotfiles/snippets
 let g:UltiSnipsSnippetsDir="~/dotfiles/snippets/UltiSnips"
 
-inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
 
 let g:UltiSnipsJumpForwardTrigger	= "<c-k>"
 let g:UltiSnipsJumpBackwardTrigger	= "<c-j>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 
-set completeopt=noinsert,menuone,noselect
-augroup my_cm_setup
-  autocmd!
-  autocmd BufEnter * call ncm2#enable_for_buffer()
-  autocmd Filetype tex call ncm2#register_source({
-          \ 'name': 'vimtex',
-          \ 'priority': 8,
-          \ 'scope': ['tex'],
-          \ 'mark': 'tex',
-          \ 'word_pattern': '\w+',
-          \ 'complete_pattern': g:vimtex#re#ncm2,
-          \ 'on_complete': ['ncm2#on_complete#omni', 'vimtex#complete#omnifunc'],
-          \ })
-augroup END
+set completeopt-=preview
 
 let g:LanguageClient_serverCommands = {
    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
@@ -83,6 +68,9 @@ set showtabline=2
 set textwidth=110
 set termguicolors
 set relativenumber
+set foldmethod=syntax
+set foldnestmax=1
+set foldlevel=1
 
 highlight ColorColumn ctermbg=darkgray
 :hi CursorLine cterm=none
@@ -116,6 +104,11 @@ augroup line_return
                 \ if line("'\"") > 0 && line("'\"") <= line("$") && !exists("b:execute_on_git_commit") |
                 \ execute 'normal! g`"zvzz' |
                 \ endif
+augroup END
+
+augroup fold_source
+  au!
+  au BufReadPost *.cpp,*.cc,*.c execute ':%foldc'
 augroup END
 
 let g:airline_theme = 'atomic'
