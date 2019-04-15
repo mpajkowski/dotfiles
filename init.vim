@@ -6,47 +6,43 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'https://github.com/rbgrouleff/bclose.vim'
 Plug 'junegunn/fzf'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
 Plug 'lervag/vimtex'
 Plug 'kristijanhusak/vim-hybrid-material'
-Plug 'roxma/nvim-yarp'
 Plug 'sakhnik/nvim-gdb'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'rhysd/vim-clang-format'
-Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'tpope/vim-surround'
 Plug 'alepez/vim-gtest'
 Plug 'Raimondi/delimitMate'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 call plug#end()
 
-let g:deoplete#enable_at_startup = 1
 let NERDTreeAutoDeleteBuffer = 1
 
 set runtimepath+=~/dotfiles/snippets
 let g:UltiSnipsSnippetsDir="~/dotfiles/snippets/UltiSnips"
 
-
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
 let g:UltiSnipsJumpForwardTrigger	= "<c-k>"
 let g:UltiSnipsJumpBackwardTrigger	= "<c-j>"
 let g:UltiSnipsRemoveSelectModeMappings = 0
 
+let g:NERDTreeMapJumpPrevSibling=""
+let g:NERDTreeMapJumpNextSibling=""
+
 set completeopt-=preview
 
-let g:LanguageClient_serverCommands = {
-   \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-   \ 'c': ['cquery', '--log-file=/tmp/cq.log',   '--init={"cacheDirectory":"/home/marcin/.cache/cquery"}'],
-   \ 'cpp': ['cquery', '--log-file=/tmp/cq.log', '--init={"cacheDirectory":"/home/marcin/.cache/cquery"}'],
-   \ }
+" coc.nvim
+" Use `[c` and `]c` for navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
 
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 set background=dark
 colorscheme hybrid_reverse
@@ -106,11 +102,6 @@ augroup line_return
                 \ endif
 augroup END
 
-augroup fold_source
-  au!
-  au BufReadPost *.cpp,*.cc,*.c execute ':%foldc'
-augroup END
-
 let g:airline_theme = 'atomic'
 let g:airline#extensions#tabline#enabled = 2
 let g:airline#extensions#tabline#fnamemod = ':t'
@@ -130,6 +121,6 @@ nnoremap <silent> <Leader>bd :Bclose<CR>
 nnoremap <silent> <Leader>qq :q<CR>
 
 autocmd BufWritePre * %s/\s\+$//e
-autocmd BufWritePre *.h,*.hpp,*.c,*.cpp,*.cc ClangFormat
+
 " local vim settings
 sil! source ~/.config/nvim/local.vim

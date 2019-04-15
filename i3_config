@@ -124,16 +124,16 @@ bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
 bindsym $mod+0 workspace $ws10
 
-workspace $ws1  output eDP-1
-workspace $ws2  output eDP-1
-workspace $ws3  output eDP-1
-workspace $ws4  output eDP-1
-workspace $ws5  output eDP-1
-workspace $ws6  output HDMI-1
-workspace $ws7  output HDM1-1
-workspace $ws8  output HDMI-1
-workspace $ws9  output HDMI-1
-workspace $ws10 output HDMI-1
+workspace $ws1  output eDP1
+workspace $ws2  output eDP1
+workspace $ws3  output eDP1
+workspace $ws4  output eDP1
+workspace $ws5  output eDP1
+workspace $ws6  output HDMI1
+workspace $ws7  output HDM11
+workspace $ws8  output HDMI1
+workspace $ws9  output HDMI1
+workspace $ws10 output HDMI1
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
@@ -188,9 +188,10 @@ bar {
 	position top
 }
 
-exec xrandr --output DP-1 --off --output HDMI-1 --mode 1920x1080 --pos 0x0 --rotate normal --output eDP-1 --primary --mode 1920x1080 --pos 1920x592 --rotate normal --output HDMI-2 --off
+for_window [title="Guitar Pro 5 -"] exec --no-startup-id ~/.config/i3/gp5.sh; floating disable
+
+exec --no-startup-id setxkbmap pl -option caps:swapescape
+exec --no-startup-id ~/.screenlayout/arandr2.sh
 exec albert
-exec qsynth
-# Compositor (Animations, Shadows, Transparency)
-exec --no-startup-id compton -cCFb --backend glx --vsync opengl
-exec --no-startup-id exec nm-applet
+exec compton
+exec --no-startup-id nm-applet
