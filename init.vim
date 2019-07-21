@@ -89,9 +89,10 @@ call plug#end()
   " LanguageClient
   let g:LanguageClient_serverCommands = {
       \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-      \ 'python': ['pyls']
+      \ 'python': ['dotnet', 'exec', '~/python-language-server/output/bin/Release/Microsoft.Python.LanguageServer.dll']
       \ }
   let g:LanguageClient_hasSnippetSupport = 1
+  let g:LanguageClient_settingsPath='~/.config/nvim/settings.json'
 
   let g:LanguageClient_useVirtualText = 0
 
