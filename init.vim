@@ -18,9 +18,7 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
-Plug 'ncm2/ncm2'
-Plug 'ncm2/ncm2-ultisnips'
-Plug 'roxma/nvim-yarp'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 """
 
@@ -39,6 +37,8 @@ call plug#end()
   set hidden
   set noswapfile
   set mouse=a
+  set updatetime=300
+  set shortmess+=c
 
   " text edit settings
   set tabstop=2
@@ -73,28 +73,26 @@ call plug#end()
 """
 
 " plug settings
-  " ncm2
-  autocmd BufEnter * call ncm2#enable_for_buffer()
-  set completeopt=noinsert,menuone,noselect
+  " coc.nvim
+  inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() :
+                                           \"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-  " ncm2-ultisnips
-  inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+  nmap <silent> [c <Plug>(coc-diagnostic-prev)
+  nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+  nmap <silent> gd <Plug>(coc-definition)
+  nmap <silent> gy <Plug>(coc-type-definition)
+  nmap <silent> gi <Plug>(coc-implementation)
+  nmap <silent> gr <Plug>(coc-references)
+	autocmd CursorHold * silent call CocActionAsync('highlight')
+  nmap <F2> <Plug>(coc-rename)
+	command! -nargs=0 Format :call CocAction('format')
 
   " NERDTree
   let NERDTreeAutoDeleteBuffer = 1
   let NERDTreeHijackNetrw=1
   let g:NERDTreeMapJumpPrevSibling=""
   let g:NERDTreeMapJumpNextSibling=""
-
-  " LanguageClient
-  let g:LanguageClient_serverCommands = {
-      \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-      \ 'python': ['dotnet', 'exec', '~/python-language-server/output/bin/Release/Microsoft.Python.LanguageServer.dll']
-      \ }
-  let g:LanguageClient_hasSnippetSupport = 1
-  let g:LanguageClient_settingsPath='~/.config/nvim/settings.json'
-
-  let g:LanguageClient_useVirtualText = 0
 
   " UltiSnips
   set runtimepath+=~/dotfiles/snippets
@@ -127,11 +125,6 @@ call plug#end()
   nnoremap <S-Tab> :bprev<CR>
   nnoremap <silent> <Leader>bd :Bclose<CR>
 
-  " quickfix
-  nnoremap <silent> ]c :cn<CR>
-  nnoremap <silent> [c :cp<CR>
-  nnoremap <silent> <Leader>c :copen<CR>
-
   " split movement
   nnoremap <silent> <leader><Up> :wincmd k<CR>
   nnoremap <silent> <leader><Down> :wincmd j<CR>
@@ -146,7 +139,7 @@ call plug#end()
   nnoremap <silent> <leader>ov :e $MYVIMRC<CR>
   nnoremap <silent> <leader>sv :w<CR> :so $MYVIMRC<CR>
   nnoremap <silent> <leader>tv :e $HOME/.tmux.conf<CR>
-  nnoremap <silent> <leader>i3 :e $HOME/.config/i3/config<CR>
+  nnoremap <silent> <leader>i3 :e $HOME/.config/sway/config<CR>
 
   " sidebars
   nnoremap <silent> <Leader>nn :NERDTreeToggle<CR>
