@@ -98,8 +98,8 @@ call plug#end()
   set runtimepath+=~/dotfiles/snippets
   let g:UltiSnipsSnippetsDir="~/dotfiles/snippets/UltiSnips"
 
-  let g:UltiSnipsJumpForwardTrigger	= "<c-k>"
-  let g:UltiSnipsJumpBackwardTrigger	= "<c-j>"
+  let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
+  let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
   let g:UltiSnipsRemoveSelectModeMappings = 0
 
   " airline
