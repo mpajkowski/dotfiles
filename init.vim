@@ -25,7 +25,6 @@ call plug#end()
 " editor settings
   " colors
   set termguicolors
-  set completeopt-=preview
   set background=dark
   colo hybrid_reverse
   highlight ColorColumn ctermbg=darkgray
@@ -39,6 +38,8 @@ call plug#end()
   set mouse=a
   set updatetime=300
   set shortmess+=c
+  set splitbelow
+  set splitright
 
   " text edit settings
   set tabstop=2
@@ -144,6 +145,10 @@ call plug#end()
   " sidebars
   nnoremap <silent> <Leader>nn :NERDTreeToggle<CR>
   nnoremap <silent> <Leader>tt :TagbarToggle<CR>
+
+  " terminal
+  nnoremap <silent> <leader>tm :split \| resize 17 \| term<CR>
+  tnoremap <silent> <Esc> <C-\><C-n>
 
   " save the buffer!
   nnoremap zs :w<CR>
