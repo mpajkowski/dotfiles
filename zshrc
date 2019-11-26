@@ -1,12 +1,25 @@
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
+autoload -Uz compinit && compinit
+zstyle ':completion:*:*:*' menu yes select
+zstyle ':vcs_info:git:*' formats ' [%b]'
 
-setopt NO_NOMATCH
-prompt cloud
+setopt prompt_subst
+setopt no_nomatch
+
+autoload -Uz vcs_info
+precmd() { vcs_info }
+
+PROMPT='%F{red}%~%F{blue}${vcs_info_msg_0_} %F{white}%'
 
 export EDITOR=nvim
 
+export SAVEHIST=10000
+export HISTFILE="$HOME/.history"
+setopt hist_ignore_all_dups
+
+setopt autocd
+setopt correctall
+
+autoload -z promptinit
 
 # diff-so-fancy
 PATH=$PATH:$HOME/diff-so-fancy:$HOME/.cargo
