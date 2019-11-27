@@ -8,7 +8,7 @@ setopt no_nomatch
 autoload -Uz vcs_info
 precmd() { vcs_info }
 
-PROMPT='%F{red}%~%F{blue}${vcs_info_msg_0_} %F{white}%'
+PROMPT='%F{red}%~%F{blue}${vcs_info_msg_0_}%F{white} →> '
 
 export EDITOR=nvim
 
