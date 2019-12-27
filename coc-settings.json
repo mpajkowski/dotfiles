@@ -1,3 +1,5 @@
 {
-  "python.jediEnabled": false
+  "python.jediEnabled": false,
+  "python.formatting.provider": "black",
+  "rust-analyzer.enableCargoWatchOnStartup": "enabled"
 }

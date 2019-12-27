@@ -12,6 +12,7 @@ Plug 'honza/vim-snippets'
 Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf.vim'
 Plug 'jiangmiao/auto-pairs'
+Plug 'file:///home/marcin/kucowanko/term-uri', {'branch': 'playground', 'do': 'cargo build --release'}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 """
@@ -51,6 +52,10 @@ set nu
 set relativenumber
 set cursorline
 set showtabline=2
+set autowriteall
+
+autocmd BufLeave,FocusLost * silent! :update
+
 autocmd BufRead,BufNewFile * setlocal signcolumn=yes
 autocmd FileType tagbar,nerdtree setlocal signcolumn=no
 
@@ -74,14 +79,16 @@ augroup END
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() :
                                        \"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
+nnoremap <silent> [c <Plug>(coc-diagnostic-prev)
+nnoremap <silent> ]c <Plug>(coc-diagnostic-next)
 
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+
+nnoremap <silent> gd <Plug>(coc-definition)
+nnoremap <silent> gy <Plug>(coc-type-definition)
+nnoremap <silent> gi <Plug>(coc-implementation)
+nnoremap <silent> gr <Plug>(coc-references)
 autocmd CursorHold * silent call CocActionAsync('highlight')
+
 nmap <F2> <Plug>(coc-rename)
 command! -nargs=0 Format :call CocAction('format')
 
@@ -137,6 +144,7 @@ let mapleader = ' '
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprev<CR>
 nnoremap <silent> <Leader>bd :Bclose<CR>
+tnoremap <silent> <Leader>bd :Bclose!<CR>
 
 " split movement
 nnoremap <silent> <leader><Up> :wincmd k<CR>
@@ -164,6 +172,12 @@ tnoremap <silent> <Esc> <C-\><C-n>
 
 " save the buffer!
 nnoremap zs :w<CR>
+
+" Hex read
+nmap <Leader>hr :%!xxd<CR> :set filetype=xxd<CR>
+
+" Hex write
+nmap <Leader>hw :%!xxd -r<CR> :set binary<CR> :set filetype=<CR>
 """
 
 " source local vim settings
