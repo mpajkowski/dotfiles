@@ -81,6 +81,7 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() :
 
 nnoremap <silent> [c <Plug>(coc-diagnostic-prev)
 nnoremap <silent> ]c <Plug>(coc-diagnostic-next)
+nnoremap <silent> <F3> :CocList diagnostics<CR>
 
 
 nnoremap <silent> gd <Plug>(coc-definition)
