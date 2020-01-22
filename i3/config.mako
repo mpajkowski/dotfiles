@@ -192,9 +192,7 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3status
         position top
-        % if location != 'grodzisk':
         output primary
-        % endif
 }
 
 ## gaps
