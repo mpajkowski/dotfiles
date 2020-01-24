@@ -10,12 +10,8 @@ SCRIPT_DIR = os.path.dirname(os.path.realpath(sys.argv[0]))
 def render(filename, args):
     i3_template = Template(filename=filename)
 
-    output = i3_template.render(**args)
+    return i3_template.render(**args)
 
-    print(output)
-
-    with open(os.path.join(SCRIPT_DIR, 'config'), 'w') as f:
-        f.write(output)
 
 if __name__ == '__main__':
     args = sys.argv[1:]
@@ -27,4 +23,9 @@ if __name__ == '__main__':
         parsed_args[k] = v
 
     config_file = os.path.join(SCRIPT_DIR, "config.mako")
-    render(config_file, parsed_args)
+    output = render(config_file, parsed_args)
+
+    print(output)
+
+    with open(os.path.join(SCRIPT_DIR, 'config'), 'w') as f:
+        f.write(output)

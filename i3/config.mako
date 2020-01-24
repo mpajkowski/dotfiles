@@ -146,11 +146,11 @@ workspace 8 output primary
 workspace 9 output primary
 workspace 10 output primary
 
-% if computer == 'dell' and (location == 'lodz' or location == 'grodzisk'):
+% if computer and location and computer == 'dell' and (location == 'lodz' or location == 'grodzisk'):
 workspace 0 output HDMI1
 % endif
 
-% if computer == 'thinkpad' and location == 'wrobla':
+% if computer and location and computer == 'thinkpad' and location == 'wrobla':
 workspace 0 output HDMI-3
 workspace 11 output HDMI-2
 % endif
@@ -206,11 +206,13 @@ gaps inner 8
 gaps outer 8
 smart_gaps on
 
-bindsym $mod+m exec ~/.config/i3/${computer}_${location}.sh
-bindsym $mod+Control+L exec xflock4
+% if computer and location:
 exec --no-startup-id ~/.config/i3/${computer}_${location}.sh
+% endif
 exec --no-startup-id compton
-exec --no-startup-id feh ~/.config/i3/wallpaper.jpg
+exec --no-startup-id feh --bg-scale ~/.config/i3/wallpaper.jpg
 
+
+bindsym $mod+Control+L exec xflock4
 
 exec albert
