@@ -97,9 +97,6 @@ bindsym $mod+space focus mode_toggle
 ## focus the parent container
 bindsym $mod+a focus parent
 
-## focus the child container
-bindsym $mod+d focus child
-
 ## Define names for default workspaces for which we configure key bindings later on.
 ## We use variables to avoid repeating the names in multiple places.
 set $ws1 "1"
@@ -153,6 +150,11 @@ workspace 10 output primary
 workspace 0 output HDMI1
 % endif
 
+% if computer == 'thinkpad' and location == 'wrobla':
+workspace 0 output HDMI-3
+workspace 11 output HDMI-2
+% endif
+
 ## reload the configuration file
 bindsym $mod+Shift+c reload
 ## restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -195,15 +197,20 @@ bar {
         output primary
 }
 
+## pidgin
+for_window [class="^Pidgin$" window_role="^conversation$"] resize grow width 0 px or 30 ppt
+
 ## gaps
 for_window [class=".*"] border pixel 0
 gaps inner 8
 gaps outer 8
 smart_gaps on
 
-exec --no-startup-id compton
-exec --no-startup-id feh --bg-center ~/.config/i3/wallpaper.jpg
-
+bindsym $mod+m exec ~/.config/i3/${computer}_${location}.sh
+bindsym $mod+Control+L exec xflock4
 exec --no-startup-id ~/.config/i3/${computer}_${location}.sh
+exec --no-startup-id compton
+exec --no-startup-id feh ~/.config/i3/wallpaper.jpg
+
 
 exec albert
