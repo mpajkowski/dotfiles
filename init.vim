@@ -61,6 +61,7 @@ autocmd FileType tagbar,nerdtree setlocal signcolumn=no
 
 " tidy-up whitespaces before write
 autocmd BufWritePre * %s/\s\+$//e
+autocmd BufWritePre * call CocAction('format')
 
 " Make Sure that Vim returns to the same line when we reopen a file"
 augroup line_return
@@ -91,7 +92,7 @@ nnoremap <silent> gr <Plug>(coc-references)
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 nmap <F2> <Plug>(coc-rename)
-command! -nargs=0 Format :call CocAction('format')
+command! -nargs=0 Format :call CocActionAsync('format')
 
 " NERDTree
 let NERDTreeAutoDeleteBuffer = 1

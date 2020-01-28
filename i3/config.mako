@@ -201,7 +201,8 @@ bar {
 for_window [class="^Pidgin$" window_role="^conversation$"] resize grow width 0 px or 30 ppt
 
 ## gaps
-for_window [class=".*"] border pixel 0
+for_window [class="albert"] border pixel 0
+for_window [class=".*"] border pixel 3
 gaps inner 8
 gaps outer 8
 smart_gaps on
