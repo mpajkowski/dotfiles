@@ -43,7 +43,7 @@ setopt pushd_to_home            # `pushd` = `pushd $HOME`
 autoload -z promptinit
 
 # diff-so-fancy
-PATH=$PATH:$HOME/diff-so-fancy:$HOME/.cargo/bin
+PATH=$PATH:$HOME/diff-so-fancy:$HOME/.cargo/bin:$HOME/.local/bin
 
 alias vim="nvim"
 alias gits="git status"

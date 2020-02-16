@@ -1,19 +1,23 @@
+set nocompatible
 " plugins
 call plug#begin('~/.config/nvim/plugged')
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'https://github.com/majutsushi/tagbar.git'
+Plug 'majutsushi/tagbar'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'https://github.com/rbgrouleff/bclose.vim'
+Plug 'rbgrouleff/bclose.vim'
 Plug 'junegunn/fzf'
-Plug 'lervag/vimtex'
 Plug 'kristijanhusak/vim-hybrid-material'
-Plug 'honza/vim-snippets'
-Plug 'tpope/vim-surround'
 Plug 'junegunn/fzf.vim'
-Plug 'jiangmiao/auto-pairs'
-Plug 'file:///home/marcin/kucowanko/term-uri', {'branch': 'playground', 'do': 'cargo build --release'}
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2-ultisnips'
+Plug 'SirVer/ultisnips'
+Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 call plug#end()
 """
 
@@ -35,6 +39,7 @@ set updatetime=300
 set shortmess+=c
 set splitbelow
 set splitright
+set noshowmode
 
 " text edit settings
 set tabstop=4
@@ -61,7 +66,6 @@ autocmd FileType tagbar,nerdtree setlocal signcolumn=no
 
 " tidy-up whitespaces before write
 autocmd BufWritePre * %s/\s\+$//e
-autocmd BufWritePre * call CocAction('format')
 
 " Make Sure that Vim returns to the same line when we reopen a file"
 augroup line_return
@@ -74,25 +78,28 @@ augroup line_return
 augroup END
 """
 
-" plug settings
+" LanguageClient
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['~/.cargo/bin/ra_lsp_server'],
+    \ }
 
-" coc.nvim
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() :
-                                       \"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> ga :call LanguageClient#textDocument_codeAction()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
-nnoremap <silent> [c <Plug>(coc-diagnostic-prev)
-nnoremap <silent> ]c <Plug>(coc-diagnostic-next)
-nnoremap <silent> <F3> :CocList diagnostics<CR>
+let g:LanguageClient_useVirtualText = "No"
 
+"" ncm2
+inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
 
-nnoremap <silent> gd <Plug>(coc-definition)
-nnoremap <silent> gy <Plug>(coc-type-definition)
-nnoremap <silent> gi <Plug>(coc-implementation)
-nnoremap <silent> gr <Plug>(coc-references)
-autocmd CursorHold * silent call CocActionAsync('highlight')
+let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+let g:UltiSnipsRemoveSelectModeMappings = 0
 
-nmap <F2> <Plug>(coc-rename)
-command! -nargs=0 Format :call CocActionAsync('format')
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone,noselect
 
 " NERDTree
 let NERDTreeAutoDeleteBuffer = 1
@@ -100,14 +107,6 @@ let NERDTreeHijackNetrw=1
 let g:NERDTreeMapJumpPrevSibling=""
 let g:NERDTreeMapJumpNextSibling=""
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-" UltiSnips
-set runtimepath+=~/dotfiles/snippets
-let g:UltiSnipsSnippetsDir="~/dotfiles/snippets/UltiSnips"
-
-let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
-let g:UltiSnipsRemoveSelectModeMappings = 0
 
 " airline
 let g:airline_theme = 'atomic'
@@ -142,6 +141,11 @@ vnoremap <Up> <Nop>
 " use space as a Leader key
 let mapleader = ' '
 
+" quickfix
+nnoremap ]c :cn<CR>
+nnoremap [c :cp<CR>
+nnoremap <F3> :cw<CR>
+
 " fight tabs with tabs
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprev<CR>
@@ -149,13 +153,9 @@ nnoremap <silent> <Leader>bd :Bclose<CR>
 tnoremap <silent> <Leader>bd :Bclose!<CR>
 
 " split movement
-nnoremap <silent> <leader><Up> :wincmd k<CR>
-nnoremap <silent> <leader><Down> :wincmd j<CR>
-nnoremap <silent> <leader><Left> :wincmd h<CR>
-nnoremap <silent> <leader><Right> :wincmd l<CR>
-nnoremap <silent> <leader>k :wincmd k<CR>
-nnoremap <silent> <leader>j :wincmd j<CR>
 nnoremap <silent> <leader>h :wincmd h<CR>
+nnoremap <silent> <leader>j :wincmd j<CR>
+nnoremap <silent> <leader>k :wincmd k<CR>
 nnoremap <silent> <leader>l :wincmd l<CR>
 
 " config files shortcuts
