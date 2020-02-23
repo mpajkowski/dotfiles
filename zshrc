@@ -3,10 +3,10 @@ autoload -Uz compinit && compinit
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
 bindkey "^[[3~"   delete-char
-bindkey "^[[H"    beginning-of-line
-bindkey "^[[F"    end-of-line
+bindkey "^[[1~"   beginning-of-line
+bindkey "^[[4~"   end-of-line
 
-zstyle ':completion:*:*:*' menu yes select
+#zstyle ':completion:*:*:*' menu yes select
 zstyle ':vcs_info:git:*' formats ' [%b]'
 
 setopt prompt_subst

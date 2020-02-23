@@ -35,7 +35,7 @@ set autoread
 set hidden
 set noswapfile
 set mouse=a
-set updatetime=300
+set updatetime=750
 set shortmess+=c
 set splitbelow
 set splitright
