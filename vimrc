@@ -1,6 +1,7 @@
 set nocompatible
+
 " plugins
-call plug#begin('~/.config/nvim/plugged')
+call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'majutsushi/tagbar'
 Plug 'vim-airline/vim-airline'
@@ -52,15 +53,16 @@ set expandtab
 set textwidth=110
 
 " misc
+set hlsearch
 set completeopt-=preview
 set nu
 set relativenumber
 set cursorline
-set showtabline=2
 set autowriteall
+set wildmenu
+set lazyredraw
 
 autocmd BufLeave,FocusLost * silent! :update
-
 autocmd BufRead,BufNewFile * setlocal signcolumn=yes
 autocmd FileType tagbar,nerdtree setlocal signcolumn=no
 
@@ -80,8 +82,10 @@ augroup END
 
 " LanguageClient
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['~/.cargo/bin/ra_lsp_server'],
+    \ 'rust': ['rust-analyzer'],
     \ }
+
+let g:LanguageClient_settingsPath = '~/.vim/settings.json'
 
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
@@ -169,7 +173,7 @@ nnoremap <silent> <Leader>nn :NERDTreeToggle<CR>
 nnoremap <silent> <Leader>tt :TagbarToggle<CR>
 
 " terminal
-nnoremap <silent> <leader>tm :split \| resize 17 \| term<CR>
+nnoremap <silent> <leader>tm :terminal<CR><ESC>:resize 17<CR>
 tnoremap <silent> <Esc> <C-\><C-n>
 
 " save the buffer!

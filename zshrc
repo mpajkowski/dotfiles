@@ -17,7 +17,7 @@ precmd() { vcs_info }
 
 PROMPT='%F{red}%~%F{blue}${vcs_info_msg_0_}%F{white} > '
 
-export EDITOR=nvim
+export EDITOR=vim
 
 ##
 ## History
@@ -45,7 +45,7 @@ autoload -z promptinit
 # diff-so-fancy
 PATH=$PATH:$HOME/diff-so-fancy:$HOME/.cargo/bin:$HOME/.local/bin
 
-alias vim="nvim"
 alias gits="git status"
+alias gp5='wine "/home/marcin/.wine/drive_c/Program Files (x86)/Guitar Pro 5/GP5.exe"'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
