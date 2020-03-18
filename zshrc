@@ -6,7 +6,6 @@ bindkey "^[[3~"   delete-char
 bindkey "^[[1~"   beginning-of-line
 bindkey "^[[4~"   end-of-line
 
-#zstyle ':completion:*:*:*' menu yes select
 zstyle ':vcs_info:git:*' formats ' [%b]'
 
 setopt prompt_subst
@@ -15,7 +14,7 @@ setopt no_nomatch
 autoload -Uz vcs_info
 precmd() { vcs_info }
 
-PROMPT='%F{red}%~%F{blue}${vcs_info_msg_0_}%F{white} > '
+PROMPT='%F{white}%~%F{red}${vcs_info_msg_0_}%F{yellow} >%F{white} '
 
 export EDITOR=vim
 
@@ -25,6 +24,7 @@ export EDITOR=vim
 HISTFILE=~/.zsh_history         # where to store zsh config
 HISTSIZE=1024                   # big history
 SAVEHIST=1024                   # big history
+
 setopt append_history           # append
 setopt hist_ignore_all_dups     # no duplicate
 unsetopt hist_ignore_space      # ignore space prefixed commands
@@ -47,5 +47,6 @@ PATH=$PATH:$HOME/diff-so-fancy:$HOME/.cargo/bin:$HOME/.local/bin
 
 alias gits="git status"
 alias gp5='wine "/home/marcin/.wine/drive_c/Program Files (x86)/Guitar Pro 5/GP5.exe"'
+alias vim='nvim'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

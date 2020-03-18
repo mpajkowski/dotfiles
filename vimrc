@@ -69,6 +69,8 @@ autocmd FileType tagbar,nerdtree setlocal signcolumn=no
 " tidy-up whitespaces before write
 autocmd BufWritePre * %s/\s\+$//e
 
+autocmd BufWritePost rust sign unplace *
+
 " Make Sure that Vim returns to the same line when we reopen a file"
 augroup line_return
     au!
