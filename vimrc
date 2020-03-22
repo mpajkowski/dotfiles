@@ -4,21 +4,12 @@ set nocompatible
 call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'majutsushi/tagbar'
+Plug 'rbgrouleff/bclose.vim'
+Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'rbgrouleff/bclose.vim'
-Plug 'junegunn/fzf'
 Plug 'kristijanhusak/vim-hybrid-material'
-Plug 'junegunn/fzf.vim'
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2-ultisnips'
-Plug 'SirVer/ultisnips'
-Plug 'roxma/vim-hug-neovim-rpc'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 """
 
@@ -69,8 +60,6 @@ autocmd FileType tagbar,nerdtree setlocal signcolumn=no
 " tidy-up whitespaces before write
 autocmd BufWritePre * %s/\s\+$//e
 
-autocmd BufWritePost rust sign unplace *
-
 " Make Sure that Vim returns to the same line when we reopen a file"
 augroup line_return
     au!
@@ -82,30 +71,31 @@ augroup line_return
 augroup END
 """
 
-" LanguageClient
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rust-analyzer'],
-    \ }
+nmap <F2> <Plug>(coc-rename)
 
-let g:LanguageClient_settingsPath = '~/.vim/settings.json'
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
 
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> ga :call LanguageClient#textDocument_codeAction()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nmap ga <Plug>(coc-codeaction)
+nnoremap <silent> <F3> :<C-u>CocList diagnostics<cr>
+nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-let g:LanguageClient_useVirtualText = "No"
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
 
-"" ncm2
-inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+" Use K to show documentation in preview window.
 
-let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
-let g:UltiSnipsRemoveSelectModeMappings = 0
-
-autocmd BufEnter * call ncm2#enable_for_buffer()
-set completeopt=noinsert,menuone,noselect
+inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " NERDTree
 let NERDTreeAutoDeleteBuffer = 1
@@ -146,11 +136,6 @@ vnoremap <Right> <Nop>
 vnoremap <Up> <Nop>
 " use space as a Leader key
 let mapleader = ' '
-
-" quickfix
-nnoremap ]c :cn<CR>
-nnoremap [c :cp<CR>
-nnoremap <F3> :cw<CR>
 
 " fight tabs with tabs
 nnoremap <Tab> :bnext<CR>
