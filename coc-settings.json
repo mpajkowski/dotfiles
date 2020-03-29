@@ -1,4 +1,5 @@
 {
     "coc.preferences.formatOnSaveFiletypes": ["rust", "json", "java"],
-    "rust-analyzer.cargo-watch.command": "clippy"
+    "rust-analyzer.cargo-watch.command": "clippy",
+    "python.jediEnabled": false
 }
