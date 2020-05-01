@@ -1,5 +1,7 @@
 autoload -Uz compinit && compinit
 
+. /etc/profile.d/vte.sh
+
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
 bindkey "^[[3~"   delete-char
@@ -50,3 +52,4 @@ alias gp5='wine "/home/marcin/.wine/drive_c/Program Files (x86)/Guitar Pro 5/GP5
 alias vim='nvim'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ] && source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"

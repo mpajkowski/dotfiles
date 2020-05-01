@@ -1,5 +1,23 @@
 {
-    "coc.preferences.formatOnSaveFiletypes": ["rust", "json", "java"],
-    "rust-analyzer.cargo-watch.command": "clippy",
-    "python.jediEnabled": false
+  "coc.preferences.formatOnSaveFiletypes": ["rust", "json", "java"],
+  "python.jediEnabled": false,
+  "rust-analyzer.checkOnSave.enable": true,
+  "rust-analyzer.checkOnSave.command": "clippy",
+  "languageserver": {
+    "haskell": {
+      "command": "hie-wrapper",
+      "args": ["--lsp"],
+      "rootPatterns": [
+        "*.cabal",
+        "stack.yaml",
+        "cabal.project",
+        "package.yaml"
+      ],
+      "filetypes": ["hs", "lhs", "haskell"],
+      "initializationOptions": {
+        "languageServerHaskell": {}
+      }
+    }
+  }
 }
+

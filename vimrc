@@ -74,7 +74,7 @@ augroup END
 if has("nvim")
     command! -nargs=* TerminalSplit split | resize 20 | terminal
 else
-    command! -nargs=* TerminalSplit terminal | normal resize 20
+    command! -nargs=* TerminalSplit terminal
 endif
 
 command! -nargs=* TerminalVSplit vsplit | terminal
@@ -223,7 +223,7 @@ let mapleader = ' '
 " fight tabs with tabs
 nnoremap <expr> <Leader>bd &buftype == "terminal" ? ":bd!<CR>" : ":Bclose<CR>"
 nmap <Tab> <Plug>AirlineSelectNextTab
-nmap <S-Tab> <Plug>AirlineSelecPrevTab
+nmap <S-Tab> <Plug>AirlineSelectPrevTab
 
 " split movement
 nnoremap <silent> <leader>h :wincmd h<CR>
