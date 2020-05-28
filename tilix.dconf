@@ -1,0 +1,27 @@
+[/]
+quake-specific-monitor=0
+terminal-title-style='none'
+
+[keybindings]
+session-add-down='<Primary><Alt>d'
+session-resize-terminal-down='<Shift><Alt>j'
+session-resize-terminal-left='<Shift><Alt>h'
+session-resize-terminal-right='<Shift><Alt>l'
+session-resize-terminal-up='<Shift><Alt>k'
+session-switch-to-terminal-down='<Alt>j'
+session-switch-to-terminal-left='<Alt>h'
+session-switch-to-terminal-right='<Alt>l'
+session-switch-to-terminal-up='<Alt>k'
+
+[profiles/2b7c4080-0ddd-46c5-8f23-563fd3ba789d]
+background-color='#1E1E1E'
+badge-color-set=false
+bold-color-set=false
+cursor-colors-set=false
+font='Monaco 12'
+foreground-color='#A7A7A7'
+highlight-colors-set=false
+palette=['#1E1E1E', '#CF6A4C', '#8F9D6A', '#F9EE98', '#7587A6', '#9B859D', '#AFC4DB', '#A7A7A7', '#5F5A60', '#CF6A4C', '#8F9D6A', '#F9EE98', '#7587A6', '#9B859D', '#AFC4DB', '#FFFFFF']
+use-system-font=false
+use-theme-colors=false
+visible-name='Default'
