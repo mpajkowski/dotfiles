@@ -1,9 +1,11 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": ["rust", "json", "java"],
-  "python.jediEnabled": false,
-  "rust-analyzer.checkOnSave.command": "clippy",
-  "rust-analyzer.inlayHints.chainingHints": false,
-  "rust-analyzer.updates.channel": "nightly",
-  "omnisharp.useDotnet": true
+    "coc.preferences.formatOnSaveFiletypes": [
+        "rust",
+        "json",
+        "java"
+    ],
+    "rust-analyzer.checkOnSave.command": "clippy",
+    "rust-analyzer.inlayHints.chainingHints": false,
+    "omnisharp.useDotnet": true,
+    "python.jediEnabled": false
 }
-

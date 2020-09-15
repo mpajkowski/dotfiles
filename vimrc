@@ -1,7 +1,7 @@
 set nocompatible
 
 " plugins
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'majutsushi/tagbar'
 Plug 'junegunn/fzf'
@@ -9,9 +9,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'kristijanhusak/vim-hybrid-material'
-Plug 'rust-lang/rust.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'mhinz/vim-crates'
+Plug 'rust-lang/rust.vim'
 call plug#end()
 """
 
@@ -71,14 +70,6 @@ augroup line_return
                 \ execute 'normal! g`"zvzz' |
                 \ endif
 augroup END
-
-if has("nvim")
-    command! -nargs=* TerminalSplit split | resize 20 | terminal
-else
-    command! -nargs=* TerminalSplit terminal
-endif
-
-command! -nargs=* TerminalVSplit vsplit | terminal
 
 " Delete buffer while keeping window layout (don't close buffer's windows).
 " Version 2008-11-18 from http://vim.wikia.com/wiki/VimTip165
@@ -164,7 +155,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nmap ga <Plug>(coc-codeaction)
+nmap ga v<Plug>(coc-codeaction-selected)
 nnoremap <silent> <F3> :<C-u>CocList diagnostics<cr>
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
@@ -218,6 +209,7 @@ vnoremap <Down> <Nop>
 vnoremap <Left> <Nop>
 vnoremap <Right> <Nop>
 vnoremap <Up> <Nop>
+
 " use space as a Leader key
 let mapleader = ' '
 
@@ -241,11 +233,6 @@ nnoremap <silent> <leader>i3 :e $HOME/.config/i3/config<CR>
 " sidebars
 nnoremap <silent> <Leader>nn :NERDTreeToggle<CR>
 nnoremap <silent> <Leader>tt :TagbarToggle<CR>
-
-" terminal
-tnoremap <silent> <Esc> <C-\><C-n>
-
-nnoremap <silent> <leader>tm :TerminalSplit<CR>
 
 " save the buffer!
 nnoremap zs :w<CR>

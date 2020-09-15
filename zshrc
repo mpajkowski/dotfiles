@@ -1,3 +1,4 @@
+export LANG=en_US.UTF-8
 . /etc/profile.d/vte*.sh
 
 autoload -Uz compinit && compinit
@@ -45,10 +46,16 @@ setopt pushd_to_home            # `pushd` = `pushd $HOME`
 autoload -z promptinit
 
 # diff-so-fancy + rust + py packages
-export PATH=$PATH:$HOME/diff-so-fancy:$HOME/.cargo/bin:$HOME/.local/bin
+export DENO_INSTALL="/home/marcin/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
 
 alias gits="git status"
 alias gp5='wine "/home/marcin/.wine/drive_c/Program Files (x86)/Guitar Pro 5/GP5.exe"'
 alias vim='nvim'
 
 [ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
+
+PERL5LIB="/home/marcin/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/marcin/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/marcin/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/marcin/perl5"; export PERL_MM_OPT;
