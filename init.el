@@ -7,6 +7,13 @@
 
 (package-initialize)
 
+(setq make-backup-files nil)
+
+(use-package super-save
+  :ensure t
+  :config
+  (super-save-mode +1))
+
 (use-package dashboard
   :config
   (setq dashboard-items '((recents . 5)
@@ -228,4 +235,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(dashboard yasnippet which-key use-package treemacs-projectile treemacs-magit treemacs-icons-dired treemacs-evil treemacs-all-the-icons rustic rg lsp-mode hybrid-reverse-theme helm-rg flycheck company)))
+   '(real-auto-save dashboard yasnippet which-key use-package treemacs-projectile treemacs-magit treemacs-icons-dired treemacs-evil treemacs-all-the-icons rustic rg lsp-mode hybrid-reverse-theme helm-rg flycheck company)))
