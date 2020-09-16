@@ -9,6 +9,10 @@
 
 (setq make-backup-files nil)
 
+(setq indent-tabs-mode nil)
+(define-key text-mode-map (kbd "<tab>") 'tab-to-tab-stop)
+(setq tab-stop-list (number-sequence 4 120 4))
+
 (use-package super-save
   :ensure t
   :config
@@ -24,9 +28,9 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(setq inhibit-startup-message t) 
+(setq inhibit-startup-message t)
 (setq initial-scratch-message nil)
-	
+
 (require 'use-package)
 
 (electric-pair-mode 1)
@@ -61,6 +65,8 @@
   :config
   (setq read-process-output-max (* 1024 1024))
   (setq gc-cons-threshold 10000000))
+
+(use-package lsp-ui :commands lsp-ui-mode)
 
 
 ;; Note that ‘uniquify’ is builtin.
@@ -102,7 +108,7 @@
 
 (use-package rustic
   :config
-  (setq lsp-rust-analyzer-server-command "/home/marcin/.local/bin/rust-analyzer")
+  (setq lsp-rust-analyzer-server-command "/home/mpa/.local/bin/rust-analyzer")
   (setq rustic-lsp-server 'rust-analyzer))
 
 (use-package company
@@ -200,21 +206,20 @@
 (use-package treemacs-magit
   :after treemacs magit)
 
-
-(use-package treemacs-all-the-icons
-  :config
-  (treemacs-load-theme "all-the-icons"))
-
-
 (use-package which-key
     :config
     (which-key-mode))
 
+(use-package telephone-line
+  :config
+  (telephone-line-mode 1))
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 (add-hook 'before-save-hook (lambda () (when (eq 'rustic-mode major-mode)
                                            (lsp-format-buffer))))
 
 
-(global-display-line-numbers-mode 1)
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
 (setq-default display-line-numbers-type 'relative)
 (scroll-bar-mode -1)
 
@@ -235,4 +240,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(real-auto-save dashboard yasnippet which-key use-package treemacs-projectile treemacs-magit treemacs-icons-dired treemacs-evil treemacs-all-the-icons rustic rg lsp-mode hybrid-reverse-theme helm-rg flycheck company)))
+   '(zzz-to-char real-auto-save dashboard yasnippet which-key use-package treemacs-projectile treemacs-magit treemacs-icons-dired treemacs-evil rustic rg lsp-mode hybrid-reverse-theme helm-rg flycheck company)))
