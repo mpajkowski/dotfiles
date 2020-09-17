@@ -89,7 +89,11 @@
   (setq gc-cons-threshold 10000000))
 
 (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
-(use-package lsp-ui :commands lsp-ui-mode)
+(use-package lsp-ui
+  :config
+  (setq lsp-ui-doc-show-with-cursor t)
+  (setq lsp-ui-doc-show-with-mouse t)
+  :commands lsp-ui-mode)
 
 
 ;; Note that ‘uniquify’ is builtin.
@@ -219,6 +223,8 @@
   :config
   (telephone-line-mode 1))
 
+(use-package yaml-mode)
+
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (add-hook 'before-save-hook (lambda () (when (eq 'rustic-mode major-mode)
                                            (lsp-format-buffer))))
@@ -250,4 +256,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(all-the-icons-ivy-rich all-the-icons-ivy treemacs-all-the-icons all-the-icons dired dire lsp-ivy counsel lsp-ui zzz-to-char real-auto-save dashboard yasnippet which-key use-package treemacs-projectile treemacs-magit treemacs-icons-dired treemacs-evil rustic rg lsp-mode hybrid-reverse-theme flycheck company)))
+   '(yaml-mode all-the-icons-ivy-rich all-the-icons-ivy treemacs-all-the-icons all-the-icons dired dire lsp-ivy counsel lsp-ui zzz-to-char real-auto-save dashboard yasnippet which-key use-package treemacs-projectile treemacs-magit treemacs-icons-dired treemacs-evil rustic rg lsp-mode hybrid-reverse-theme flycheck company)))
