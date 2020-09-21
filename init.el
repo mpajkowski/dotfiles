@@ -33,6 +33,12 @@
   (dashboard-setup-startup-hook))
 
 (electric-pair-mode 1)
+(defvar rust-electric-pairs '((?| . ?|)) "Electric pairs for Rust Mode")
+(defun rust-add-electric-pairs()
+  (setq-local electric-pair-pairs (append electric-pair-pairs rust-electric-pairs))
+  (setq-local electric-pair-text-pairs electric-pair-pairs))
+
+(add-hook 'rustic-mode-hook 'rust-add-electric-pairs)
 
 ;; Save sessions history
 (setq savehist-save-minibuffer-history 1)
@@ -53,11 +59,23 @@
   (evil-define-key 'normal 'global (kbd "SPC <down>") 'evil-window-down)
   (evil-define-key 'normal 'global (kbd "SPC <up>") 'evil-window-up)
   (evil-define-key 'normal 'global (kbd "SPC <right>") 'evil-window-right)
+  (evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
+  (evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
+  (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
+  (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
+  (evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
+  (evil-define-key 'normal neotree-mode-map (kbd "n") 'neotree-next-line)
+  (evil-define-key 'normal neotree-mode-map (kbd "p") 'neotree-previous-line)
+  (evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
+  (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
   (evil-mode))
 
 (use-package counsel
   :config
   (setq ivy-use-virtual-buffers t)
+  (setq ivy-re-builders-alist
+    '((swiper . regexp-quote)
+      (t      . ivy--regex-fuzzy)))
   (setq enable-recursive-minibuffers t)
   (global-set-key "\C-s" 'swiper)
   (global-set-key (kbd "C-c C-r") 'ivy-resume)
@@ -91,7 +109,6 @@
 (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 (use-package lsp-ui
   :config
-  (setq lsp-ui-doc-show-with-cursor t)
   (setq lsp-ui-doc-show-with-mouse t)
   :commands lsp-ui-mode)
 
@@ -132,88 +149,11 @@
   :config
   (setq all-the-icons-color-icons t))
 
-(use-package treemacs
-  :defer t
-  :init
-  (with-eval-after-load 'winum
-    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+(use-package neotree
   :config
-  (progn
-    (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
-          treemacs-deferred-git-apply-delay      0.5
-          treemacs-directory-name-transformer    #'identity
-          treemacs-display-in-side-window        t
-          treemacs-eldoc-display                 t
-          treemacs-file-event-delay              5000
-          treemacs-file-extension-regex          treemacs-last-period-regex-value
-          treemacs-file-follow-delay             0.2
-          treemacs-file-name-transformer         #'identity
-          treemacs-follow-after-init             t
-          treemacs-git-command-pipe              ""
-          treemacs-goto-tag-strategy             'refetch-index
-          treemacs-indentation                   2
-          treemacs-indentation-string            " "
-          treemacs-is-never-other-window         nil
-          treemacs-max-git-entries               5000
-          treemacs-missing-project-action        'ask
-          treemacs-move-forward-on-expand        nil
-          treemacs-no-png-images                 nil
-          treemacs-no-delete-other-windows       t
-          treemacs-project-follow-cleanup        nil
-          treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
-          treemacs-position                      'left
-          treemacs-recenter-distance             0.1
-          treemacs-recenter-after-file-follow    nil
-          treemacs-recenter-after-tag-follow     nil
-          treemacs-recenter-after-project-jump   'always
-          treemacs-recenter-after-project-expand 'on-distance
-          treemacs-show-cursor                   nil
-          treemacs-show-hidden-files             t
-          treemacs-silent-filewatch              nil
-          treemacs-silent-refresh                nil
-          treemacs-sorting                       'alphabetic-asc
-          treemacs-space-between-root-nodes      t
-          treemacs-tag-follow-cleanup            t
-          treemacs-tag-follow-delay              1.5
-          treemacs-user-mode-line-format         nil
-          treemacs-user-header-line-format       nil
-          treemacs-width                         35
-          treemacs-workspace-switch-cleanup      nil)
-
-    ;; The default width and height of the icons is 22 pixels. If you are
-    ;; using a Hi-DPI display, uncomment this to double the icon size.
-    ;;(treemacs-resize-icons 44)
-
-    (treemacs-follow-mode t)
-    (treemacs-filewatch-mode t)
-    (treemacs-fringe-indicator-mode t)
-    (pcase (cons (not (null (executable-find "git")))
-                 (not (null treemacs-python-executable)))
-      (`(t . t)
-       (treemacs-git-mode 'deferred))
-      (`(t . _)
-       (treemacs-git-mode 'simple))))
-  :bind
-  (:map global-map
-        ("M-0"       . treemacs-select-window)
-        ("C-x t 1"   . treemacs-delete-other-windows)
-        ("C-x t t"   . treemacs)
-        ("C-x t B"   . treemacs-bookmark)
-        ("C-x t C-t" . treemacs-find-file)
-        ("C-x t M-t" . treemacs-find-tag)))
-
-(use-package treemacs-evil
-  :after treemacs evil)
-
-(use-package treemacs-projectile
-  :after treemacs projectile)
-
-(use-package treemacs-magit
-  :after treemacs magit)
-
-(use-package treemacs-all-the-icons
-  :config
-  (treemacs-load-theme "all-the-icons"))
+  (global-set-key [f8] 'neotree-toggle)
+  (setq neo-theme (if (display-graphic-p) 'icons 'material))
+  (setq projectile-switch-project-action 'neotree-projectile-action))
 
 (use-package which-key
     :config
@@ -256,4 +196,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(yaml-mode all-the-icons-ivy-rich all-the-icons-ivy treemacs-all-the-icons all-the-icons dired dire lsp-ivy counsel lsp-ui zzz-to-char real-auto-save dashboard yasnippet which-key use-package treemacs-projectile treemacs-magit treemacs-icons-dired treemacs-evil rustic rg lsp-mode hybrid-reverse-theme flycheck company)))
+   '(neotree persp-projectile perspective lsp-ui lsp-ivy lsp-mode eglot yaml-mode all-the-icons-ivy-rich all-the-icons-ivy treemacs-all-the-icons all-the-icons dired dire zzz-to-char real-auto-save dashboard yasnippet which-key use-package treemacs-magit treemacs-icons-dired treemacs-evil rustic rg hybrid-reverse-theme flycheck company)))
