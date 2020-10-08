@@ -6,7 +6,7 @@
     (with-current-buffer
         (url-retrieve-synchronously
          "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
+	 'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
@@ -21,7 +21,8 @@
 
 (require 'ido)
 (ido-mode t)
-(global-set-key "\C-x\C-b" 'ibuffer)
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "<f9>") 'eval-buffer)
 
 (setq make-backup-files nil)
 (setq inhibit-startup-message t)
@@ -34,20 +35,15 @@
   :config
   (super-save-mode +1))
 
-(use-package dashboard
-  :straight t
-  :config
-  (setq dashboard-items '((recents . 5)
-			  (projects . 10)))
-  (dashboard-setup-startup-hook))
-
-(electric-pair-mode 1)
+(electric-pair-mode +1)
 (defvar rust-electric-pairs '((?| . ?|)) "Electric pairs for Rust Mode")
 (defun rust-add-electric-pairs()
   (setq-local electric-pair-pairs (append electric-pair-pairs rust-electric-pairs))
   (setq-local electric-pair-text-pairs electric-pair-pairs))
 
 (add-hook 'rustic-mode-hook 'rust-add-electric-pairs)
+(show-paren-mode 1)
+(setq show-paren-delay 0)
 
 ;; Save sessions history
 (setq savehist-save-minibuffer-history 1)
@@ -56,6 +52,20 @@
       savehist-file "~/.emacs.d/savehist")
 (savehist-mode t)
 
+(use-package centaur-tabs
+  :straight t
+  :config
+  (setq centaur-tabs-style "bar"
+        centaur-tabs-height 32
+        centaur-tabs-set-icons t
+	centaur-tabs-set-close-button nil
+        centaur-tabs-set-modified-marker t
+        centaur-tabs-modified-marker "+"
+        centaur-tabs-show-navigation-buttons t
+        centaur-tabs-set-bar 'under
+        x-underline-at-descent-line t)
+   (centaur-tabs-headline-match)
+   (centaur-tabs-mode t))
 
 (use-package evil
   :straight t
@@ -68,7 +78,10 @@
   (evil-define-key 'normal 'global (kbd "SPC <down>") 'evil-window-down)
   (evil-define-key 'normal 'global (kbd "SPC <up>") 'evil-window-up)
   (evil-define-key 'normal 'global (kbd "SPC <right>") 'evil-window-right)
+  (evil-define-key 'normal 'global (kbd "<tab>") 'centaur-tabs-forward)
+  (evil-define-key 'normal 'global (kbd "<backtab>") 'centaur-tabs-backward)
   (evil-mode))
+
 
 (use-package counsel
   :straight t
@@ -107,6 +120,7 @@
 (use-package lsp-mode
   :straight t
   :config
+  ;;(setq lsp-rust-analyzer-server-command '("~/.local/bin/rust-analyzer"))
   (setq read-process-output-max (* 1024 1024))
   (setq gc-cons-threshold 10000000))
 
@@ -148,6 +162,11 @@
      ("C-n" . company-select-next-or-abort)
      ("C-p" . company-select-previous-or-abort)))
 
+(use-package company-box
+  :straight t
+  :hook (company-mode . company-box-mode)
+  :custom (company-box-icons-alist 'company-box-icons-all-the-icons))
+
 (use-package yasnippet
   :straight t
   :config
@@ -159,38 +178,19 @@
  (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
  (projectile-mode +1))
 
-(use-package treemacs
+(use-package neotree
   :straight t
-  :bind
-  (("C-x t t" . treemacs)
-   :map treemacs-mode-map
-   ("M-p" . treemacs-previous-project)
-   ("M-n" . treemacs-next-project))
-
-  :custom
-  (treemacs-follow-after-init          t)
-  (treemacs-width                      25)
-  (treemacs-indentation                2)
-
-  (treemacs-git-integration            t)
-  (treemacs-git-mode                   'extended)
-  (treemacs-filewatch-mode             t)
-
-  (treemacs-collapse-dirs              3)
-  (treemacs-silent-refresh             nil)
-  (treemacs-change-root-without-asking nil)
-  (treemacs-sorting                    'alphabetic-desc)
-  (treemacs-show-hidden-files          t)
-  (treemacs-never-persist              nil)
-  (treemacs-is-never-other-window      nil)
-  (treemacs-goto-tag-strategy          'refetch-index)
-  (treemacs--width-is-locked           nil)
-
-  (treemacs-persist-file "~/.emacs.d/treemacs-persist")
-)
-
-(use-package treemacs-evil
-  :straight t)
+  :bind (("<f8>" . neotree-toggle))
+  :defer
+  :config
+   (setq projectile-switch-project-action 'neotree-projectile-action)
+    (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
+    (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
+    (evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
+    (evil-define-key 'normal neotree-mode-map (kbd "j") 'neotree-next-line)
+    (evil-define-key 'normal neotree-mode-map (kbd "k") 'neotree-previous-line)
+    (evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
+    (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle))
 
 (use-package all-the-icons
   :straight t
