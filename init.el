@@ -1,3 +1,5 @@
+;; ./configure --enable-link-time-optimization --with-xwidgets --with-x-toolkit=gtk3 --without-gconf --without-gsettings --with-nativecomp CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer"
+
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -64,8 +66,9 @@
         centaur-tabs-show-navigation-buttons t
         centaur-tabs-set-bar 'under
         x-underline-at-descent-line t)
-   (centaur-tabs-headline-match)
-   (centaur-tabs-mode t))
+  (centaur-tabs-projectile-buffer-groups)
+  (centaur-tabs-headline-match)
+  (centaur-tabs-mode t))
 
 (use-package evil
   :straight t
@@ -121,6 +124,7 @@
   :straight t
   :config
   ;;(setq lsp-rust-analyzer-server-command '("~/.local/bin/rust-analyzer"))
+  (evil-define-key 'normal 'global (kbd "g a") 'lsp-execute-code-action)
   (setq read-process-output-max (* 1024 1024))
   (setq gc-cons-threshold 10000000))
 
@@ -177,6 +181,11 @@
   :config
  (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
  (projectile-mode +1))
+
+(use-package counsel-projectile
+  :straight t
+  :config
+  (counsel-projectile-mode))
 
 (use-package neotree
   :straight t

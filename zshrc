@@ -52,6 +52,7 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 alias gits="git status"
 alias gp5='wine "/home/marcin/.wine/drive_c/Program Files (x86)/Guitar Pro 5/GP5.exe"'
 alias vim='nvim'
+alias emacs='emacs -mm'
 
 [ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
 
