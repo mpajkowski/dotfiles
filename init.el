@@ -186,6 +186,7 @@
   :straight t
   :config
  (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
+ (setq projectile-completion-system 'ivy)
  (projectile-mode +1))
 
 (use-package counsel-projectile
@@ -193,19 +194,6 @@
   :config
   (counsel-projectile-mode))
 
-;;(use-package neotree
-;;  :straight t
-;;  :bind (("<f8>" . neotree-toggle))
-;;  :defer
-;;  :config
-;;   (setq projectile-switch-project-action 'neotree-projectile-action)
-;;    (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
-;;    (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
-;;    (evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
-;;    (evil-define-key 'normal neotree-mode-map (kbd "j") 'neotree-next-line)
-;;    (evil-define-key 'normal neotree-mode-map (kbd "k") 'neotree-previous-line)
-;;    (evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
-;;    (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle))
 (use-package treemacs
   :straight t
   :defer t
@@ -227,55 +215,6 @@
   :config
   (setq lsp-rust-analyzer-cargo-watch-command "clippy")
   (lsp-treemacs-sync-mode 1))
-
-(use-package treemacs-projectile
-  :straight t
-  :after treemacs)
-
-    (use-package persp-mode-projectile-bridge
-      :straight t
-      :config
-      (with-eval-after-load "persp-mode-projectile-bridge-autoloads"
-          (add-hook 'persp-mode-projectile-bridge-mode-hook
-                    #'(lambda ()
-                        (if persp-mode-projectile-bridge-mode
-                            (persp-mode-projectile-bridge-find-perspectives-for-all-buffers)
-                          (persp-mode-projectile-bridge-kill-perspectives))))
-          (add-hook 'after-init-hook
-                    #'(lambda ()
-                        (persp-mode-projectile-bridge-mode 1))
-                    t)))
-
-    (use-package persp-mode
-      :straight t
-      :demand t
-      :init
-      (setq-default
-       persp-auto-resume-time 0.1)
-      :config
-      (progn
-        (persp-mode 1)
-        (setq-default
-         persp-auto-save-fname ".persp"
-         persp-auto-save-num-of-backups 1
-         persp-autokill-buffer-on-remove nil)
-
-
-        ;; filter out buffers we don't want picked up
-        (add-hook 'persp-common-buffer-filter-functions
-                  ;; there is also `persp-add-buffer-on-after-change-major-mode-filter-functions'
-                  #'(lambda (b)
-                      (or
-                       ;; filter out ephemeral buffers
-                       (string-prefix-p "*" (buffer-name b))
-
-                       ;; filter out magit buffers
-                       (string-prefix-p "magit" (buffer-name b))
-
-                       ;; filter out dired-based buffers (included ranger)
-                       (with-current-buffer b
-                          (derived-mode-p 'dired-mode)))))
-        ))
 
 (use-package all-the-icons
   :straight t
