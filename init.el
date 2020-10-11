@@ -158,6 +158,7 @@
 (use-package rustic
   :straight t
   :config
+  (setq lsp-rust-analyzer-cargo-watch-command "clippy")
   (setq rustic-lsp-server 'rust-analyzer))
 
 (use-package company
@@ -221,6 +222,7 @@
 
 (use-package lsp-treemacs
   :straight t
+  :commands lsp-treemacs-error-list
   :after treemacs lsp-mode
   :config
   (setq lsp-rust-analyzer-cargo-watch-command "clippy")

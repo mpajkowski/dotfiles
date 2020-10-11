@@ -1,4 +1,3 @@
-export LANG=pl_PL.UTF-8
 . /etc/profile.d/vte*.sh
 
 autoload -Uz compinit && compinit
@@ -55,8 +54,3 @@ alias vim='nvim'
 alias emacs='emacs -mm'
 
 [ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
-
-PERL5LIB="/home/marcin/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/marcin/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/marcin/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/marcin/perl5"; export PERL_MM_OPT;
