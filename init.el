@@ -126,7 +126,9 @@
   ;;(setq lsp-rust-analyzer-server-command '("~/.local/bin/rust-analyzer"))
   (evil-define-key 'normal 'global (kbd "g a") 'lsp-execute-code-action)
   (setq read-process-output-max (* 1024 1024))
-  (setq gc-cons-threshold 10000000))
+  (setq gc-cons-threshold 10000000)
+  (setq lsp-ui-sideline-enable nil)
+  (setq lsp-eldoc-enable-hover nil))
 
 (use-package lsp-ivy
   :straight t
@@ -162,6 +164,9 @@
   :straight t
   :hook
   (after-init . global-company-mode)
+  :config
+  (setq company-minimum-prefix-length 1
+	company-idle-delay 0.1)
   :bind (:map company-active-map
      ("C-n" . company-select-next-or-abort)
      ("C-p" . company-select-previous-or-abort)))
@@ -187,19 +192,88 @@
   :config
   (counsel-projectile-mode))
 
-(use-package neotree
+;;(use-package neotree
+;;  :straight t
+;;  :bind (("<f8>" . neotree-toggle))
+;;  :defer
+;;  :config
+;;   (setq projectile-switch-project-action 'neotree-projectile-action)
+;;    (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
+;;    (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
+;;    (evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
+;;    (evil-define-key 'normal neotree-mode-map (kbd "j") 'neotree-next-line)
+;;    (evil-define-key 'normal neotree-mode-map (kbd "k") 'neotree-previous-line)
+;;    (evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
+;;    (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle))
+(use-package treemacs
   :straight t
-  :bind (("<f8>" . neotree-toggle))
-  :defer
+  :defer t
+  :init
+   (with-eval-after-load 'winum
+       (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+   :bind
+    (:map global-map
+	  ("C-x t t" . treemacs)))
+
+(use-package treemacs-evil
+  :straight t
+  :after treemacs evil)
+
+(use-package lsp-treemacs
+  :straight t
+  :after treemacs lsp-mode
   :config
-   (setq projectile-switch-project-action 'neotree-projectile-action)
-    (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
-    (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
-    (evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
-    (evil-define-key 'normal neotree-mode-map (kbd "j") 'neotree-next-line)
-    (evil-define-key 'normal neotree-mode-map (kbd "k") 'neotree-previous-line)
-    (evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
-    (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle))
+  (setq lsp-rust-analyzer-cargo-watch-command "clippy")
+  (lsp-treemacs-sync-mode 1))
+
+(use-package treemacs-projectile
+  :straight t
+  :after treemacs)
+
+    (use-package persp-mode-projectile-bridge
+      :straight t
+      :config
+      (with-eval-after-load "persp-mode-projectile-bridge-autoloads"
+          (add-hook 'persp-mode-projectile-bridge-mode-hook
+                    #'(lambda ()
+                        (if persp-mode-projectile-bridge-mode
+                            (persp-mode-projectile-bridge-find-perspectives-for-all-buffers)
+                          (persp-mode-projectile-bridge-kill-perspectives))))
+          (add-hook 'after-init-hook
+                    #'(lambda ()
+                        (persp-mode-projectile-bridge-mode 1))
+                    t)))
+
+    (use-package persp-mode
+      :straight t
+      :demand t
+      :init
+      (setq-default
+       persp-auto-resume-time 0.1)
+      :config
+      (progn
+        (persp-mode 1)
+        (setq-default
+         persp-auto-save-fname ".persp"
+         persp-auto-save-num-of-backups 1
+         persp-autokill-buffer-on-remove nil)
+
+
+        ;; filter out buffers we don't want picked up
+        (add-hook 'persp-common-buffer-filter-functions
+                  ;; there is also `persp-add-buffer-on-after-change-major-mode-filter-functions'
+                  #'(lambda (b)
+                      (or
+                       ;; filter out ephemeral buffers
+                       (string-prefix-p "*" (buffer-name b))
+
+                       ;; filter out magit buffers
+                       (string-prefix-p "magit" (buffer-name b))
+
+                       ;; filter out dired-based buffers (included ranger)
+                       (with-current-buffer b
+                          (derived-mode-p 'dired-mode)))))
+        ))
 
 (use-package all-the-icons
   :straight t
@@ -211,10 +285,10 @@
   :config
   (which-key-mode))
 
-(use-package telephone-line
+(use-package doom-modeline
   :straight t
   :config
-  (telephone-line-mode 1))
+  (doom-modeline-mode 1))
 
 (use-package yaml-mode
   :straight t)

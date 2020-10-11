@@ -1,4 +1,4 @@
-export LANG=en_US.UTF-8
+export LANG=pl_PL.UTF-8
 . /etc/profile.d/vte*.sh
 
 autoload -Uz compinit && compinit
