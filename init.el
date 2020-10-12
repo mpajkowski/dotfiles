@@ -43,7 +43,6 @@
   (setq-local electric-pair-pairs (append electric-pair-pairs rust-electric-pairs))
   (setq-local electric-pair-text-pairs electric-pair-pairs))
 
-(add-hook 'rustic-mode-hook 'rust-add-electric-pairs)
 (show-paren-mode 1)
 (setq show-paren-delay 0)
 
@@ -114,6 +113,9 @@
   :config
   (global-set-key (kbd "C-x g") 'magit-status))
 
+(use-package evil-magit
+  :straight t)
+
 (use-package hybrid-reverse-theme
   :straight t
   :config
@@ -161,6 +163,11 @@
   (setq lsp-rust-analyzer-cargo-watch-command "clippy")
   (setq rustic-lsp-server 'rust-analyzer))
 
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(add-hook 'before-save-hook (lambda () (when (eq 'rustic-mode major-mode)
+                                           (lsp-format-buffer))))
+(add-hook 'rustic-mode-hook 'rust-add-electric-pairs)
+
 (use-package company
   :straight t
   :hook
@@ -204,6 +211,10 @@
     (:map global-map
 	  ("C-x t t" . treemacs)))
 
+(use-package treemacs-projectile
+  :straight t
+  :after treemacs)
+
 (use-package treemacs-evil
   :straight t
   :after treemacs evil)
@@ -213,7 +224,6 @@
   :commands lsp-treemacs-error-list
   :after treemacs lsp-mode
   :config
-  (setq lsp-rust-analyzer-cargo-watch-command "clippy")
   (lsp-treemacs-sync-mode 1))
 
 (use-package all-the-icons
@@ -233,11 +243,6 @@
 
 (use-package yaml-mode
   :straight t)
-
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-(add-hook 'before-save-hook (lambda () (when (eq 'rustic-mode major-mode)
-                                           (lsp-format-buffer))))
-
 
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 (setq-default display-line-numbers-type 'relative)
