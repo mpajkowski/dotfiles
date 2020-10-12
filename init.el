@@ -84,14 +84,30 @@
   (evil-define-key 'normal 'global (kbd "<backtab>") 'centaur-tabs-backward)
   (evil-mode))
 
+(use-package ivy
+  :straight t
+  :diminish (ivy-mode . "")
+  :bind
+  :config
+  (ivy-mode 1)
+  ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
+  (setq ivy-use-virtual-buffers t)
+  ;; number of result lines to display
+  (setq ivy-height 10)
+  ;; does not count candidates
+  (setq ivy-count-format "")
+  ;; no regexp by default
+  (setq ivy-initial-inputs-alist nil)
+  ;; configure regexp engine.
+  (setq ivy-re-builders-alist
+	;; allow input not in order
+        '((t   . ivy--regex-ignore-order))))
+
 
 (use-package counsel
   :straight t
   :config
   (setq ivy-use-virtual-buffers t)
-  (setq ivy-re-builders-alist
-    '((swiper . regexp-quote)
-      (t      . ivy--regex-fuzzy)))
   (setq enable-recursive-minibuffers t)
   (global-set-key "\C-s" 'swiper)
   (global-set-key (kbd "C-c C-r") 'ivy-resume)
@@ -105,8 +121,7 @@
   (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
   (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
   (global-set-key (kbd "C-x l") 'counsel-locate)
-  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
-  (ivy-mode 1))
+  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
 (use-package magit
   :straight t
