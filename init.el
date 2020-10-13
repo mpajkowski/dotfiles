@@ -1,4 +1,9 @@
 ;; ./configure --enable-link-time-optimization --with-xwidgets --with-x-toolkit=gtk3 --without-gconf --without-gsettings --with-nativecomp CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer"
+(setq make-backup-files nil)
+(setq inhibit-startup-message t)
+(setq initial-scratch-message nil)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -17,34 +22,35 @@
 (straight-use-package 'use-package)
 (require 'use-package)
 
+(blink-cursor-mode 0)
+;; https://emacs.stackexchange.com/questions/28736/emacs-pointcursor-movement-lag/28746
+(setq auto-window-vscroll nil)
+
+;; https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 1024 1024))
+
+(global-set-key (kbd "M-l") 'windmove-right)
+(global-set-key (kbd "M-k") 'windmove-up)
+(global-set-key (kbd "M-j") 'windmove-down)
+(global-set-key (kbd "M-h") 'windmove-left)
+
 (setq use-package-always-ensure t)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-(require 'ido)
-(ido-mode t)
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 (global-set-key (kbd "<f9>") 'eval-buffer)
-
-(setq make-backup-files nil)
-(setq inhibit-startup-message t)
-(setq initial-scratch-message nil)
-(menu-bar-mode -1)
-(tool-bar-mode -1)
 
 (use-package super-save
   :straight t
   :config
   (super-save-mode +1))
 
-(electric-pair-mode +1)
-(defvar rust-electric-pairs '((?| . ?|)) "Electric pairs for Rust Mode")
-(defun rust-add-electric-pairs()
-  (setq-local electric-pair-pairs (append electric-pair-pairs rust-electric-pairs))
-  (setq-local electric-pair-text-pairs electric-pair-pairs))
-
-(show-paren-mode 1)
-(setq show-paren-delay 0)
+(use-package smartparens
+  :straight t
+  :config
+  (smartparens-mode))
 
 ;; Save sessions history
 (setq savehist-save-minibuffer-history 1)
@@ -72,14 +78,6 @@
 (use-package evil
   :straight t
   :config
-  (evil-define-key 'normal 'global (kbd "SPC h") 'evil-window-left)
-  (evil-define-key 'normal 'global (kbd "SPC j") 'evil-window-down)
-  (evil-define-key 'normal 'global (kbd "SPC k") 'evil-window-up)
-  (evil-define-key 'normal 'global (kbd "SPC l") 'evil-window-right)
-  (evil-define-key 'normal 'global (kbd "SPC <left>") 'evil-window-left)
-  (evil-define-key 'normal 'global (kbd "SPC <down>") 'evil-window-down)
-  (evil-define-key 'normal 'global (kbd "SPC <up>") 'evil-window-up)
-  (evil-define-key 'normal 'global (kbd "SPC <right>") 'evil-window-right)
   (evil-define-key 'normal 'global (kbd "<tab>") 'centaur-tabs-forward)
   (evil-define-key 'normal 'global (kbd "<backtab>") 'centaur-tabs-backward)
   (evil-mode))
@@ -140,10 +138,7 @@
 (use-package lsp-mode
   :straight t
   :config
-  ;;(setq lsp-rust-analyzer-server-command '("~/.local/bin/rust-analyzer"))
   (evil-define-key 'normal 'global (kbd "g a") 'lsp-execute-code-action)
-  (setq read-process-output-max (* 1024 1024))
-  (setq gc-cons-threshold 10000000)
   (setq lsp-ui-sideline-enable nil)
   (setq lsp-eldoc-enable-hover nil))
 
@@ -178,31 +173,22 @@
   (setq lsp-rust-analyzer-cargo-watch-command "clippy")
   (setq rustic-lsp-server 'rust-analyzer))
 
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-(add-hook 'before-save-hook (lambda () (when (eq 'rustic-mode major-mode)
-                                           (lsp-format-buffer))))
-(add-hook 'rustic-mode-hook 'rust-add-electric-pairs)
-
 (use-package company
   :straight t
   :hook
   (after-init . global-company-mode)
   :config
   (setq company-minimum-prefix-length 1
-	company-idle-delay 0.1)
+	company-idle-delay 0.0)
   :bind (:map company-active-map
      ("C-n" . company-select-next-or-abort)
      ("C-p" . company-select-previous-or-abort)))
-
-(use-package company-box
-  :straight t
-  :hook (company-mode . company-box-mode)
-  :custom (company-box-icons-alist 'company-box-icons-all-the-icons))
 
 (use-package yasnippet
   :straight t
   :config
   (yas-global-mode 1))
+
 
 (use-package projectile
   :straight t
@@ -228,7 +214,9 @@
 
 (use-package treemacs-projectile
   :straight t
-  :after treemacs)
+  :after treemacs
+  :bind
+  (:map projectile-mode-map ("C-x p p" . treemacs-projectile)))
 
 (use-package treemacs-evil
   :straight t
@@ -254,6 +242,7 @@
 (use-package doom-modeline
   :straight t
   :config
+  (setq doom-modeline-enable-word-count nil)
   (doom-modeline-mode 1))
 
 (use-package yaml-mode
@@ -262,7 +251,6 @@
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 (setq-default display-line-numbers-type 'relative)
 (scroll-bar-mode -1)
-
 
 ;; bindings
 (evil-define-key 'normal 'global (kbd "SPC b d") (lambda() (interactive) (kill-buffer (current-buffer))))
