@@ -173,6 +173,7 @@
   (setq lsp-rust-analyzer-cargo-watch-command "clippy")
   (setq rustic-lsp-server 'rust-analyzer))
 
+
 (use-package company
   :straight t
   :hook
@@ -193,8 +194,8 @@
 (use-package projectile
   :straight t
   :config
- (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
  (setq projectile-completion-system 'ivy)
+ (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
  (projectile-mode +1))
 
 (use-package counsel-projectile
@@ -214,9 +215,9 @@
 
 (use-package treemacs-projectile
   :straight t
-  :after treemacs
   :bind
-  (:map projectile-mode-map ("C-x p p" . treemacs-projectile)))
+  (:map projectile-mode-map
+	("C-x p p" . treemacs-projectile)))
 
 (use-package treemacs-evil
   :straight t
