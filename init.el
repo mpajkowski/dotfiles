@@ -30,11 +30,6 @@
 (setq gc-cons-threshold 100000000)
 (setq read-process-output-max (* 1024 1024))
 
-(global-set-key (kbd "M-l") 'windmove-right)
-(global-set-key (kbd "M-k") 'windmove-up)
-(global-set-key (kbd "M-j") 'windmove-down)
-(global-set-key (kbd "M-h") 'windmove-left)
-
 (setq use-package-always-ensure t)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -116,8 +111,6 @@
   (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
   (global-set-key (kbd "<f1> o") 'counsel-describe-symbol)
   (global-set-key (kbd "<f1> l") 'counsel-find-library)
-  (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
-  (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
   (global-set-key (kbd "C-x l") 'counsel-locate)
   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
@@ -139,8 +132,13 @@
   :straight t
   :config
   (evil-define-key 'normal 'global (kbd "g a") 'lsp-execute-code-action)
+  (evil-define-key 'normal 'global (kbd "<f2>") 'lsp-rename)
   (setq lsp-ui-sideline-enable nil)
-  (setq lsp-eldoc-enable-hover nil))
+  (setq lsp-eldoc-enable-hover nil)
+  (setq lsp-signature-render-documentation nil))
+
+(add-hook 'before-save-hook (lambda () (when (eq 'rustic-mode major-mode)
+                                           (lsp-format-buffer))))
 
 (use-package lsp-ivy
   :straight t
@@ -256,6 +254,11 @@
 ;; bindings
 (evil-define-key 'normal 'global (kbd "SPC b d") (lambda() (interactive) (kill-buffer (current-buffer))))
 (evil-define-key 'normal 'global (kbd "z s") (lambda() (interactive) (save-buffer (current-buffer))))
+(global-set-key (kbd "M-l") 'windmove-right)
+(global-set-key (kbd "M-k") 'windmove-up)
+(global-set-key (kbd "M-j") 'windmove-down)
+(global-set-key (kbd "M-h") 'windmove-left)
+
 
 ;; tabs to spaces
 (setq indent-tabs-mode nil)
