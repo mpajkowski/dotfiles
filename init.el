@@ -133,8 +133,8 @@
   :config
   (evil-define-key 'normal 'global (kbd "g a") 'lsp-execute-code-action)
   (evil-define-key 'normal 'global (kbd "<f2>") 'lsp-rename)
-  (setq lsp-ui-sideline-enable nil)
   (setq lsp-eldoc-enable-hover nil)
+  (setq lsp-signature-auto-activate nil)
   (setq lsp-signature-render-documentation nil))
 
 (add-hook 'before-save-hook (lambda () (when (eq 'rustic-mode major-mode)
@@ -147,6 +147,7 @@
 (use-package lsp-ui
   :straight t
   :config
+  (setq lsp-ui-sideline-enable nil)
   (setq lsp-ui-doc-show-with-mouse t)
   :commands lsp-ui-mode)
 
@@ -224,9 +225,7 @@
 (use-package lsp-treemacs
   :straight t
   :commands lsp-treemacs-error-list
-  :after treemacs lsp-mode
-  :config
-  (lsp-treemacs-sync-mode 1))
+  :after treemacs lsp-mode)
 
 (use-package all-the-icons
   :straight t
@@ -242,6 +241,7 @@
   :straight t
   :config
   (setq doom-modeline-enable-word-count nil)
+  (setq doom-modeline-project-detection 'project)
   (doom-modeline-mode 1))
 
 (use-package yaml-mode
