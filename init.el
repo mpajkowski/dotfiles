@@ -18,7 +18,6 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-(straight-use-package 'el-patch)
 (straight-use-package 'use-package)
 (require 'use-package)
 
@@ -29,8 +28,6 @@
 ;; https://www.reddit.com/r/emacs/comments/3kqt6e/2_easy_little_known_steps_to_speed_up_emacs_start
 (setq gc-cons-threshold 100000000)
 (setq read-process-output-max (* 1024 1024))
-
-(setq use-package-always-ensure t)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -137,9 +134,6 @@
   (setq lsp-signature-auto-activate nil)
   (setq lsp-signature-render-documentation nil))
 
-(add-hook 'before-save-hook (lambda () (when (eq 'rustic-mode major-mode)
-                                           (lsp-format-buffer))))
-
 (use-package lsp-ivy
   :straight t
   :commands lsp-ivy-workspace-symbol)
@@ -169,6 +163,7 @@
 (use-package rustic
   :straight t
   :config
+  (setq flycheck-rust-cargo-executable "~/.cargo/bin/cargo")
   (setq lsp-rust-analyzer-cargo-watch-command "clippy")
   (setq rustic-lsp-server 'rust-analyzer))
 
@@ -237,15 +232,32 @@
   :config
   (which-key-mode))
 
-(use-package doom-modeline
-  :straight t
-  :config
-  (setq doom-modeline-enable-word-count nil)
-  (setq doom-modeline-project-detection 'project)
-  (doom-modeline-mode 1))
-
 (use-package yaml-mode
   :straight t)
+
+(use-package typescript-mode
+  :straight t
+  :hook
+  (typescript-mode . lsp))
+
+(use-package ng2-mode
+  :straight t
+  :hook
+  (ng2-html . lsp)
+  (ng2-ts . lsp))
+
+(use-package prettier-js
+  :straight t
+  :hook
+  (typescript-mode . prettier-js))
+
+(use-package telephone-line
+  :straight t
+  :config
+  (telephone-line-mode 1))
+
+(add-hook 'before-save-hook (lambda () (when (eq 'rustic-mode major-mode) (lsp-format-buffer))))
+(add-hook 'before-save-hook (lambda () (when (eq 'ng2-ts major-mode) (prettier-js))))
 
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 (setq-default display-line-numbers-type 'relative)
@@ -270,7 +282,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Monaco" :foundry "unknown" :slant normal :weight normal :height 109 :width normal)))))
+ '(default ((t (:family "Monaco" :foundry "unknown" :slant normal :weight normal :height 110 :width normal)))))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -279,4 +291,4 @@
  '(custom-safe-themes
    '("b74ac449dc8608fc9317998044d29f787075c6019349da9b982af9c0f11c3f7b" default))
  '(package-selected-packages
-   '(neotree persp-projectile perspective lsp-ui lsp-ivy lsp-mode eglot yaml-mode all-the-icons-ivy-rich all-the-icons-ivy treemacs-all-the-icons all-the-icons dired dire zzz-to-char real-auto-save dashboard yasnippet which-key use-package treemacs-magit treemacs-icons-dired treemacs-evil rustic rg hybrid-reverse-theme flycheck company)))
+   '(neotree persp-projectile perspective lsp-ui lsp-ivy lsp-mode yaml-mode all-the-icons-ivy-rich all-the-icons-ivy treemacs-all-the-icons all-the-icons dired dire zzz-to-char real-auto-save dashboard yasnippet which-key use-package treemacs-magit treemacs-icons-dired treemacs-evil rustic rg hybrid-reverse-theme flycheck company)))

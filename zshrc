@@ -54,3 +54,4 @@ alias vim='nvim'
 alias emacs='emacs -mm'
 
 [ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
+export RUSTC_WRAPPER=sccache

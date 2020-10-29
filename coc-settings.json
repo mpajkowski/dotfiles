@@ -1,11 +1,16 @@
 {
-    "coc.preferences.formatOnSaveFiletypes": [
-        "rust",
-        "json",
-        "java"
-    ],
-    "rust-analyzer.checkOnSave.command": "clippy",
-    "rust-analyzer.inlayHints.chainingHints": false,
-    "omnisharp.useDotnet": true,
-    "python.jediEnabled": false
+  "coc.preferences.formatOnSaveFiletypes": [
+    "rust",
+    "json",
+    "java",
+    "typescript",
+    "javascript"
+  ],
+  "rust-analyzer.checkOnSave.command": "clippy",
+  "rust-analyzer.inlayHints.chainingHints": false,
+  "tsserver.enable": true,
+  "tsserver.implicitProjectConfig.experimentalDecorators": true,
+  "tsserver.ignoreLocalTsserver": true,
+  "omnisharp.useDotnet": true,
+  "python.jediEnabled": false
 }
