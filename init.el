@@ -163,7 +163,6 @@
 (use-package rustic
   :straight t
   :config
-  (setq flycheck-rust-cargo-executable "~/.cargo/bin/cargo")
   (setq lsp-rust-analyzer-cargo-watch-command "clippy")
   (setq rustic-lsp-server 'rust-analyzer))
 

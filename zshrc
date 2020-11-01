@@ -45,9 +45,6 @@ setopt pushd_to_home            # `pushd` = `pushd $HOME`
 autoload -z promptinit
 
 # diff-so-fancy + rust + py packages
-export DENO_INSTALL="/home/marcin/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
-
 alias gits="git status"
 alias gp5='wine "/home/marcin/.wine/drive_c/Program Files (x86)/Guitar Pro 5/GP5.exe"'
 alias vim='nvim'
