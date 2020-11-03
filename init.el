@@ -67,11 +67,16 @@
   (centaur-tabs-headline-match)
   (centaur-tabs-mode t))
 
+(use-package undo-fu
+  :straight t)
+
 (use-package evil
   :straight t
   :config
   (evil-define-key 'normal 'global (kbd "<tab>") 'centaur-tabs-forward)
   (evil-define-key 'normal 'global (kbd "<backtab>") 'centaur-tabs-backward)
+  (evil-define-key 'normal 'global (kbd "u") 'undo-fu-only-undo)
+  (evil-define-key 'normal 'global (kbd "C-r") 'undo-fu-only-redo)
   (evil-mode))
 
 (use-package ivy
@@ -281,7 +286,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Monaco" :foundry "unknown" :slant normal :weight normal :height 110 :width normal)))))
+ '(default ((t (:family "Monacob" :foundry "unknown" :slant normal :weight normal :height 112 :width normal)))))
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
