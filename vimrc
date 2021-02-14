@@ -11,7 +11,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'rust-lang/rust.vim'
-Plug 'junegunn/goyo.vim'
+Plug 'jacquesbh/vim-showmarks'
 call plug#end()
 """
 
@@ -29,7 +29,7 @@ set autoread
 set hidden
 set noswapfile
 set mouse=a
-set updatetime=750
+set updatetime=300
 set shortmess+=c
 set splitbelow
 set splitright

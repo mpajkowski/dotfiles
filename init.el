@@ -280,19 +280,3 @@
 (setq indent-tabs-mode nil)
 (define-key text-mode-map (kbd "<tab>") 'tab-to-tab-stop)
 (setq tab-stop-list (number-sequence 4 120 4))
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:family "Monacob" :foundry "unknown" :slant normal :weight normal :height 112 :width normal)))))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("b74ac449dc8608fc9317998044d29f787075c6019349da9b982af9c0f11c3f7b" default))
- '(package-selected-packages
-   '(neotree persp-projectile perspective lsp-ui lsp-ivy lsp-mode yaml-mode all-the-icons-ivy-rich all-the-icons-ivy treemacs-all-the-icons all-the-icons dired dire zzz-to-char real-auto-save dashboard yasnippet which-key use-package treemacs-magit treemacs-icons-dired treemacs-evil rustic rg hybrid-reverse-theme flycheck company)))

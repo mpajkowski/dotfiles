@@ -49,5 +49,6 @@ alias gits="git status"
 alias gp5='wine "/home/marcin/.wine/drive_c/Program Files (x86)/Guitar Pro 5/GP5.exe"'
 alias vim='nvim'
 alias emacs='emacs -mm'
+alias alacritty='alacritty --working-directory "$(readlink -e /proc/"$(pgrep -oP "$(xdo pid)")"/cwd)"'
 
 [ -f ~/.fzf.zsh ] && . ~/.fzf.zsh
