@@ -194,11 +194,9 @@ mode "resize" {
 
 bindsym Mod1+r mode "resize"
 
-for_window [class="^.*"] border pixel 0
+for_window [class="^.*"] border pixel 1
 
 bar {
-        mode hide
-        hidden_state hide
         modifier Mod4
         status_command i3status-rs
 }
