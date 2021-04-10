@@ -12,6 +12,7 @@ Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'rust-lang/rust.vim'
 Plug 'jacquesbh/vim-showmarks'
+Plug 'elubow/cql-vim'
 call plug#end()
 """
 
