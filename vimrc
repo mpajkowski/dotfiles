@@ -13,6 +13,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'rust-lang/rust.vim'
 Plug 'jacquesbh/vim-showmarks'
 Plug 'elubow/cql-vim'
+Plug 'sheerun/vim-polyglot'
 call plug#end()
 """
 
@@ -191,8 +192,9 @@ let g:airline_left_sep = ' '
 let g:airline_left_alt_sep = '|'
 let g:airline_right_sep = ' '
 let g:airline_right_alt_sep = '|'
-
 let g:airline#extensions#tabline#ignore_bufadd_pat = 'term:'
+let g:airline#extensions#tabline#fnamemod = ':.'
+let g:airline#extensions#tabline#fnamecollapse = 0
 """
 
 " key mappings

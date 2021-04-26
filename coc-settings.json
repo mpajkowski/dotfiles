@@ -1,21 +1,21 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": [
-    "rust",
-    "json",
-    "java",
-    "typescript",
-    "javascript"
-  ],
-  "rust-analyzer.checkOnSave.command": "clippy",
-  "rust-analyzer.inlayHints.maxLength": 1,
-  "rust-analyzer.inlayHints.typeHints": false,
-  "rust-analyzer.inlayHints.chainingHints": false,
-  "rust-analyzer.updates.channel": "nightly",
-  "rust-analyzer.procMacro.enable": true,
-  "rust-analyzer.cargo.loadOutDirsFromCheck": true,
-  "tsserver.enable": true,
-  "tsserver.implicitProjectConfig.experimentalDecorators": true,
-  "tsserver.ignoreLocalTsserver": true,
-  "omnisharp.useDotnet": true,
-  "python.jediEnabled": false
+    "coc.preferences.formatOnSaveFiletypes": [
+        "rust",
+        "json",
+        "java",
+        "typescript",
+        "javascript"
+    ],
+    "rust-analyzer.checkOnSave.command": "clippy",
+    "rust-analyzer.inlayHints.maxLength": 1,
+    "rust-analyzer.inlayHints.typeHints": false,
+    "rust-analyzer.inlayHints.chainingHints": false,
+    "rust-analyzer.updates.channel": "stable",
+    "rust-analyzer.procMacro.enable": true,
+    "rust-analyzer.cargo.loadOutDirsFromCheck": true,
+    "tsserver.enable": true,
+    "tsserver.implicitProjectConfig.experimentalDecorators": true,
+    "tsserver.ignoreLocalTsserver": true,
+    "omnisharp.useDotnet": true,
+    "python.jediEnabled": false
 }
