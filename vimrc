@@ -14,8 +14,15 @@ Plug 'rust-lang/rust.vim'
 Plug 'jacquesbh/vim-showmarks'
 Plug 'elubow/cql-vim'
 Plug 'sheerun/vim-polyglot'
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 call plug#end()
 """
+
+if exists('g:started_by_firenvim')
+  set laststatus=0
+else
+  set laststatus=2
+endif
 
 " editor settings
 " colors
@@ -250,7 +257,6 @@ nmap <Leader>hw :%!xxd -r<CR> :set binary<CR> :set filetype=<CR>
 
 " rust
 nnoremap <Leader>qq :RustTest<CR>
-
 
 " source local vim settings
 sil! source ~/.config/nvim/local.vim

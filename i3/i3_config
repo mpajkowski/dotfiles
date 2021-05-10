@@ -53,7 +53,7 @@ bindsym Mod1+Shift+Return exec $term
 bindsym Mod1+Shift+r split h; exec $term
 bindsym Mod1+Shift+d split v; exec $term
 
-bindsym Print exec gnome-screenshot -i
+bindsym Print exec flameshot gui
 
 # kill focused window
 bindsym Mod1+Shift+q kill
