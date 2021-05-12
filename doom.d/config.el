@@ -19,8 +19,7 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
-;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
+(setq doom-font (font-spec :family "Monaco" :size 12 :weight 'semi-light))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -52,4 +51,20 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+
+(after! centaur-tabs
+  (setq
+        centaur-tabs-style "bar"
+        centaur-tabs-height 36
+        centaur-tabs-set-icons t
+        centaur-tabs-close-button "x"
+        centaur-tabs-modified-marker "+"
+        centaur-tabs-show-navigation-buttons t
+        centaur-tabs-set-bar 'above
+        centaur-tabs-gray-out-icons 'buffer
+        centaur-tabs-cycle-scope nil)
+        (map! :n "<tab>" #'centaur-tabs-forward)
+        (map! :n "<backtab>" #'centaur-tabs-backward))
+
 (map! :n "zs" #'save-buffer)
