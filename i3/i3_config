@@ -58,7 +58,6 @@ bindsym Print exec flameshot gui
 # kill focused window
 bindsym Mod1+Shift+q kill
 
-# A more modern dmenu replacement is rofi:
 bindsym Mod1+d exec "rofi -modi drun,run -show drun"
 
 # change focus
@@ -193,7 +192,7 @@ for_window [class="^.*"] border pixel 1
 
 bar {
         modifier Mod4
-        status_command i3status-rs
+        status_command i3status
 }
 
 exec --no-startup-id ~/.screenlayout/default.sh

@@ -1,21 +1,39 @@
 {
-    "coc.preferences.formatOnSaveFiletypes": [
-        "rust",
-        "json",
-        "java",
-        "typescript",
-        "javascript"
-    ],
-    "rust-analyzer.checkOnSave.command": "clippy",
-    "rust-analyzer.inlayHints.maxLength": 1,
-    "rust-analyzer.inlayHints.typeHints": false,
-    "rust-analyzer.inlayHints.chainingHints": false,
-    "rust-analyzer.updates.channel": "stable",
-    "rust-analyzer.procMacro.enable": true,
-    "rust-analyzer.cargo.loadOutDirsFromCheck": true,
-    "tsserver.enable": true,
-    "tsserver.implicitProjectConfig.experimentalDecorators": true,
-    "tsserver.ignoreLocalTsserver": true,
-    "omnisharp.useDotnet": true,
-    "python.jediEnabled": false
+  "languageserver": {
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+      "rootPatterns": [".ccls-root", "compile_commands.json"],
+      "initializationOptions": {
+        "cache": {
+          "directory": ".ccls-cache"
+        },
+        "client": {
+          "snippetSupport": true
+        }
+      }
+    }
+  },
+  "coc.preferences.formatOnSaveFiletypes": [
+    "rust",
+    "json",
+    "jsonc",
+    "java",
+    "typescript",
+    "javascript",
+    "html",
+    "cpp",
+    "objc",
+    "objcpp",
+    "c"
+  ],
+  "rust-analyzer.checkOnSave.command": "clippy",
+  "rust-analyzer.inlayHints.maxLength": 1,
+  "rust-analyzer.inlayHints.typeHints": false,
+  "rust-analyzer.inlayHints.chainingHints": false,
+  "rust-analyzer.updates.channel": "stable",
+  "rust-analyzer.procMacro.enable": true,
+  "tsserver.enable": true,
+  "tsserver.implicitProjectConfig.experimentalDecorators": true,
+  "tsserver.ignoreLocalTsserver": true
 }
