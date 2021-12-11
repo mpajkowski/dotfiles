@@ -1,50 +1,42 @@
 {
-    "languageserver": {
-        "ccls": {
-            "command": "ccls",
-            "filetypes": [
-                "c",
-                "cpp",
-                "cuda",
-                "objc",
-                "objcpp"
-            ],
-            "rootPatterns": [
-                ".ccls-root",
-                "compile_commands.json"
-            ],
-            "initializationOptions": {
-                "cache": {
-                    "directory": ".ccls-cache"
-                },
-                "client": {
-                    "snippetSupport": true
-                }
-            }
+  "languageserver": {
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+      "rootPatterns": [".ccls-root", "compile_commands.json"],
+      "initializationOptions": {
+        "cache": {
+          "directory": ".ccls-cache"
+        },
+        "client": {
+          "snippetSupport": true
         }
-    },
-    "coc.preferences.formatOnSaveFiletypes": [
-        "rust",
-        "json",
-        "jsonc",
-        "java",
-        "typescript",
-        "javascript",
-        "html",
-        "cpp",
-        "objc",
-        "objcpp",
-        "c"
-    ],
-    "rust-analyzer.checkOnSave.command": "clippy",
-    "rust-analyzer.inlayHints.maxLength": 1,
-    "rust-analyzer.inlayHints.typeHints": false,
-    "rust-analyzer.inlayHints.chainingHints": false,
-    "rust-analyzer.updates.channel": "stable",
-    "rust-analyzer.procMacro.enable": true,
-    "rust-analyzer.cargo.allFeatures": true,
-    "tsserver.enable": true,
-    "python.jediEnabled": false,
-    "tsserver.implicitProjectConfig.experimentalDecorators": true,
-    "tsserver.ignoreLocalTsserver": true
+      }
+    }
+  },
+  "coc.preferences.formatOnSaveFiletypes": [
+    "rust",
+    "json",
+    "jsonc",
+    "java",
+    "typescript",
+    "javascript",
+    "html",
+    "cpp",
+    "objc",
+    "objcpp",
+    "c",
+    "dart"
+  ],
+  "rust-analyzer.checkOnSave.command": "clippy",
+  "rust-analyzer.inlayHints.maxLength": 1,
+  "rust-analyzer.inlayHints.typeHints": false,
+  "rust-analyzer.inlayHints.chainingHints": false,
+  "rust-analyzer.updates.channel": "stable",
+  "rust-analyzer.procMacro.enable": true,
+  "rust-analyzer.cargo.allFeatures": true,
+  "tsserver.enable": true,
+  "python.jediEnabled": false,
+  "tsserver.implicitProjectConfig.experimentalDecorators": true,
+  "tsserver.ignoreLocalTsserver": true
 }
