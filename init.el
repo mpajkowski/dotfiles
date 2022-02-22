@@ -1,4 +1,5 @@
 ;; ./configure --enable-link-time-optimization --with-native-compilation --with-pgtk CFLAGS="-O3 -mtune=native -march=native -fomit-frame-pointer"
+(add-hook 'window-setup-hook 'toggle-frame-maximized t)
 (setq make-backup-files nil)
 (setq inhibit-startup-message t)
 (setq initial-scratch-message nil)
@@ -270,10 +271,10 @@
 ;; bindings
 (evil-define-key 'normal 'global (kbd "SPC b d") (lambda() (interactive) (kill-buffer (current-buffer))))
 (evil-define-key 'normal 'global (kbd "z s") (lambda() (interactive) (save-buffer (current-buffer))))
-(global-set-key (kbd "M-l") 'windmove-right)
-(global-set-key (kbd "M-k") 'windmove-up)
-(global-set-key (kbd "M-j") 'windmove-down)
-(global-set-key (kbd "M-h") 'windmove-left)
+(evil-define-key 'normal 'global (kbd "SPC h") 'windmove-left)
+(evil-define-key 'normal 'global (kbd "SPC j") 'windmove-down)
+(evil-define-key 'normal 'global (kbd "SPC k") 'windmove-up)
+(evil-define-key 'normal 'global (kbd "SPC l") 'windmove-right)
 
 
 ;; tabs to spaces
