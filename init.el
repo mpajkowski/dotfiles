@@ -40,6 +40,11 @@
   :config
   (super-save-mode +1))
 
+(use-package exec-path-from-shell
+  :straight t
+  :config
+  (exec-path-from-shell-initialize))
+
 (use-package smartparens
   :straight t
   :config
