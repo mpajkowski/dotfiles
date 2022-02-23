@@ -142,6 +142,7 @@
   (evil-define-key 'normal 'global (kbd "g a") 'lsp-execute-code-action)
   (evil-define-key 'normal 'global (kbd "<f2>") 'lsp-rename)
   (setq lsp-eldoc-enable-hover nil)
+  (setq lsp-keep-workspace-alive nil)
   (setq lsp-signature-auto-activate nil)
   (setq lsp-signature-render-documentation nil))
 
