@@ -69,9 +69,9 @@
         centaur-tabs-show-navigation-buttons t
         centaur-tabs-set-bar 'under
         x-underline-at-descent-line t)
-  (centaur-tabs-projectile-buffer-groups)
   (centaur-tabs-headline-match)
-  (centaur-tabs-mode t))
+  (centaur-tabs-mode t)
+  (centaur-tabs-group-by-projectile-project))
 
 (use-package undo-fu
   :straight t)
@@ -261,6 +261,9 @@
   :straight t
   :hook
   (typescript-mode . prettier-js))
+
+(use-package vterm
+  :straight t)
 
 (use-package telephone-line
   :straight t
