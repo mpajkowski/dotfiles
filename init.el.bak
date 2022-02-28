@@ -73,9 +73,6 @@
   (centaur-tabs-mode t)
   (centaur-tabs-group-by-projectile-project))
 
-(use-package undo-fu
-  :straight t)
-
 (use-package evil
   :straight t
   :init
@@ -84,8 +81,6 @@
   :config
   (evil-define-key 'normal 'global (kbd "<tab>") 'centaur-tabs-forward)
   (evil-define-key 'normal 'global (kbd "<backtab>") 'centaur-tabs-backward)
-  (evil-define-key 'normal 'global (kbd "u") 'undo-fu-only-undo)
-  (evil-define-key 'normal 'global (kbd "C-r") 'undo-fu-only-redo)
   (evil-set-initial-state 'vterm-mode 'emacs)
   (evil-mode 1))
 
