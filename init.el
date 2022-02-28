@@ -78,12 +78,25 @@
 
 (use-package evil
   :straight t
+  :init
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
   :config
   (evil-define-key 'normal 'global (kbd "<tab>") 'centaur-tabs-forward)
   (evil-define-key 'normal 'global (kbd "<backtab>") 'centaur-tabs-backward)
   (evil-define-key 'normal 'global (kbd "u") 'undo-fu-only-undo)
   (evil-define-key 'normal 'global (kbd "C-r") 'undo-fu-only-redo)
-  (evil-mode))
+  (evil-set-initial-state 'vterm-mode 'emacs)
+  (evil-mode 1))
+
+(use-package evil-collection
+  :straight t
+  :after evil
+  :config
+  (evil-collection-init))
+
+(use-package flx
+  :straight t)
 
 (use-package ivy
   :straight t
@@ -101,8 +114,8 @@
   (setq ivy-initial-inputs-alist nil)
   ;; configure regexp engine.
   (setq ivy-re-builders-alist
-	;; allow input not in order
-        '((t   . ivy--regex-ignore-order))))
+      '((ivy-switch-buffer . ivy--regex-plus)
+        (t . ivy--regex-fuzzy))))
 
 
 (use-package counsel
@@ -126,9 +139,6 @@
   :straight t
   :config
   (global-set-key (kbd "C-x g") 'magit-status))
-
-(use-package evil-magit
-  :straight t)
 
 (use-package hybrid-reverse-theme
   :straight t
@@ -290,15 +300,4 @@
 (setq indent-tabs-mode nil)
 (define-key text-mode-map (kbd "<tab>") 'tab-to-tab-stop)
 (setq tab-stop-list (number-sequence 4 120 4))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(warning-suppress-types '((comp))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
