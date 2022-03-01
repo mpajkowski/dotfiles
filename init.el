@@ -243,11 +243,6 @@
   :commands lsp-treemacs-error-list
   :after treemacs lsp-mode)
 
-(use-package all-the-icons
-  :straight t
-  :config
-  (setq all-the-icons-color-icons t))
-
 (use-package which-key
   :straight t
   :config
