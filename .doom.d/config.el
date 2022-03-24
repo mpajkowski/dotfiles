@@ -95,8 +95,10 @@
 
 (after! lsp-mode
   (setq lsp-rust-analyzer-cargo-watch-command "clippy")
-  (map! :n "SPC s d" #'consult-lsp-diagnostics)
   (map! :n "g a" #'lsp-execute-code-action))
+
+(fset 'yes-or-no-p 'y-or-n-p)
+
 
 (map! :n "zs" #'save-buffer)
 (map! :n "SPC t t" #'projectile-run-vterm)
