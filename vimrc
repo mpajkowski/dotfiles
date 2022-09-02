@@ -17,6 +17,8 @@ Plug 'jacquesbh/vim-showmarks'
 Plug 'elubow/cql-vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'sheerun/vim-polyglot'
+Plug 'lervag/vimtex'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
 """
 
@@ -130,14 +132,14 @@ function! s:Bclose(bang, buffer)
       buffer #
     else
       bprevious
-    endif
+  endif
     if btarget == bufnr('%')
-      " Numbers of listed buffers which are not the target to be deleted.
-      let blisted = filter(range(1, bufnr('$')), 'buflisted(v:val) && v:val != btarget')
+      "Numbers of listed buffers which are not the target to be deleted.
+      lt blisted = filter(range(1, bufnr('$')), 'buflisted(v:val) && v:val != btarget')
       " Listed, not target, and not displayed.
       let bhidden = filter(copy(blisted), 'bufwinnr(v:val) < 0')
       " Take the first buffer, if any (could be more intelligent).
-      let bjump = (bhidden + blisted + [-1])[0]
+      lt bjump = (bhidden + blisted + [-1])[0]
       if bjump > 0
         execute 'buffer '.bjump
       else
@@ -173,7 +175,8 @@ function! s:show_documentation()
   endif
 endfunction
 
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " NERDTree
 let NERDTreeAutoDeleteBuffer = 1
@@ -201,10 +204,10 @@ let g:airline#extensions#tabline#fnamecollapse = 0
 
 " key mappings
 " disable arrows
-inoremap <Down> <Nop>
-inoremap <Left> <Nop>
-inoremap <Right> <Nop>
-inoremap <Up> <Nop>
+" inoremap <Down> <Nop>
+" inoremap <Left> <Nop>
+" inoremap <Right> <Nop>
+" inoremap <Up> <Nop>
 
 nnoremap <Down> <Nop>
 nnoremap <Left> <Nop>

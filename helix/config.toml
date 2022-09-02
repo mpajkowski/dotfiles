@@ -1,5 +1,15 @@
 theme = "onedark"
 
+[editor]
+line-number = "relative"
+idle-timeout = 200
+
+[editor.lsp]
+display-messages = false
+
+[editor.file-picker]
+hidden = false
+
 [editor.cursor-shape]
 insert = "bar"
 normal = "block"

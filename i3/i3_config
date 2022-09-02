@@ -50,9 +50,7 @@ set $term alacritty --working-directory "$(xcwd)"
 # start a terminal
 bindsym Mod1+Shift+Return exec $term
 
-bindsym Mod1+Shift+r split h; exec $term
 bindsym Mod1+Shift+d split v; exec $term
-
 bindsym Print exec flameshot gui
 
 # kill focused window
