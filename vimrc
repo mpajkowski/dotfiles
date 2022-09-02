@@ -15,6 +15,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'rust-lang/rust.vim'
 Plug 'jacquesbh/vim-showmarks'
 Plug 'elubow/cql-vim'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'sheerun/vim-polyglot'
 call plug#end()
 """
@@ -172,8 +173,7 @@ function! s:show_documentation()
   endif
 endfunction
 
-
-inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " NERDTree
 let NERDTreeAutoDeleteBuffer = 1
